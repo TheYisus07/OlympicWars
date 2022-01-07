@@ -364,7 +364,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label x:Name="labelNewTurn" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="466,125,318,382" Content="Now is your turn to Attack" Width="220" FontSize="24" FontFamily="Algerian" Visibility="Hidden" >
+        <Label x:Name="labelNewTurn" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="466,125,318,382" Content="{x:Static language:Lang.nowIsYourTurn}" Width="220" FontSize="24" FontFamily="Algerian" Visibility="Hidden" >
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <LinearGradientBrush.RelativeTransform>
@@ -456,7 +456,7 @@
                 </LinearGradientBrush>
             </Grid.Background>
             <Image HorizontalAlignment="Left" Height="470" Margin="366,28,0,0" VerticalAlignment="Top" Width="330" Source="Resources/GameOver.png"/>
-            <Button Content="Accept" HorizontalAlignment="Left" Margin="463,465,0,0" VerticalAlignment="Top" Width="114" Height="33" FontFamily="Kristen ITC" FontSize="20" Click="Button_Click_3">
+            <Button Content="{x:Static language:Lang.accept}" HorizontalAlignment="Left" Margin="463,465,0,0" VerticalAlignment="Top" Width="114" Height="33" FontFamily="Kristen ITC" FontSize="20" Click="Button_Click_3">
                 <Button.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <LinearGradientBrush.RelativeTransform>
@@ -507,7 +507,7 @@
                 </LinearGradientBrush>
             </Grid.Background>
             <Image HorizontalAlignment="Left" Height="541" Margin="332,0,0,0" VerticalAlignment="Top" Width="393" Source="Resources/Winner.png"/>
-            <Button Content="Accept" HorizontalAlignment="Left" Margin="471,473,0,0" VerticalAlignment="Top" Width="114" Height="33" FontFamily="Kristen ITC" FontSize="20" Click="Button_Click_2">
+            <Button Content="{x:Static language:Lang.accept}" HorizontalAlignment="Left" Margin="471,473,0,0" VerticalAlignment="Top" Width="114" Height="33" FontFamily="Kristen ITC" FontSize="20" Click="Button_Click_2">
                 <Button.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <LinearGradientBrush.RelativeTransform>

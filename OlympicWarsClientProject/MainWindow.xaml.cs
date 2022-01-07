@@ -287,11 +287,6 @@ namespace OlympicWarsClientProject
             borderSearchPlayer.Visibility = Visibility.Visible;
         }
 
-        private void Button_Remove_Friend_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Button_Search_Player_Click(object sender, RoutedEventArgs e)
         {
 

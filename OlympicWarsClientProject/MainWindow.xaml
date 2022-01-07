@@ -15,11 +15,11 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Image HorizontalAlignment="Left" Height="569" Margin="0 0 0 0" VerticalAlignment="Top" Width="1012" Source="Resources/WaitingRoom.png"/>
-        <Button x:Name="buttonProfile" Content="View Profile"  Width="120" Margin="7,0,877,534" Click="Button_Profile_Click" Height="35"/>
-        <Button x:Name="buttonRoomGame" Content="Room Game" Width="120" Margin="132,0,752,534" Click="Button_Room_Game_Click" Height="35"/>
-        <Button x:Name="buttonFriends" Content="Friends" Width="120" Margin="257,0,627,534" Click="Button_Friends_Click" Height="35"/>
-        <Button x:Name="buttonDecks" Content="Decks" Width="120" Margin="382,0,502,534" Height="35" Click="buttonDecks_Click"/>
-        <Button x:Name="buttonHistory" Content="History" Width="120" Margin="507,0,377,534" Height="35" Click="buttonHistory_Click"/>
+        <Button x:Name="buttonProfile" Content="{x:Static language:Lang.viewProfile}"  Width="120" Margin="7,0,877,534" Click="Button_Profile_Click" Height="35"/>
+        <Button x:Name="buttonRoomGame" Content="{x:Static language:Lang.roomGame}" Width="120" Margin="132,0,752,534" Click="Button_Room_Game_Click" Height="35"/>
+        <Button x:Name="buttonFriends" Content="{x:Static language:Lang.friends}" Width="120" Margin="257,0,627,534" Click="Button_Friends_Click" Height="35"/>
+        <Button x:Name="buttonDecks" Content="{x:Static language:Lang.decks}" Width="120" Margin="382,0,502,534" Height="35" Click="buttonDecks_Click"/>
+        <Button x:Name="buttonHistory" Content="{x:Static language:Lang.history}" Width="120" Margin="507,0,377,534" Height="35" Click="buttonHistory_Click"/>
         <materialDesign:PackIcon Kind="AlarmLight" RenderTransformOrigin="3.812,9" Margin="19,202,0,0" Height="70" Width="70" MouseUp="PackIcon_MouseUp" />
 
         <Border x:Name="borderProfile" Margin="336,33,0,0" Opacity="0.9" Background="Black" CornerRadius="10" Visibility="Hidden">
@@ -27,19 +27,19 @@
                 <TextBlock x:Name="textBlockNicknamePlayer" HorizontalAlignment="Left" Margin="23,13,0,0" TextWrapping="Wrap" Text="User" VerticalAlignment="Top" Foreground="White" FontSize="40"/>
                 <TextBlock HorizontalAlignment="Left" Margin="24,134,0,0" TextWrapping="Wrap" Text="State:" VerticalAlignment="Top" Foreground="White" FontSize="30" Width="74" Height="42"/>
                 <TextBlock x:Name="textBlockState" HorizontalAlignment="Left" Margin="22,178,0,0" TextWrapping="Wrap" Text="Text" VerticalAlignment="Top" Foreground="White" FontSize="25" Width="342" Height="42"/>
-                <Button x:Name="buttonModify" Margin="550,16,17,444" Content="Modify" Opacity="1" Click="Button_Modify_Click"/>
+                <Button x:Name="buttonModify" Margin="550,16,17,444" Content="{x:Static language:Lang.modify}" Opacity="1" Click="Button_Modify_Click"/>
                 
                 <Image x:Name="imageProfile" HorizontalAlignment="Left" Height="250" Margin="378,55,0,0" VerticalAlignment="Top" Width="250"/>
             </Grid>
         </Border>
         <Border x:Name="borderModifyProfile" Margin="336,33,0,0" Opacity="0.9" Background="Black" CornerRadius="10" Visibility="Hidden">
             <Grid>
-                <Button x:Name="buttonSaveChangesPerfil" Content="Save Changes" Margin="524,28,22,476" Click="buttonSaveChangesPerfil_Click"/>
-                <Button x:Name="buttonCancelUpdate" Content="Cancel" Margin="524,86,22,418" Click="buttonCancelUpdate_Click"/>
-                <Label Content="State:" Margin="10,28,596,465" Foreground="#DDFFFFFF" FontSize="20"/>
+                <Button x:Name="buttonSaveChangesPerfil" Content="{x:Static language:Lang.save}" Margin="524,28,22,476" Click="buttonSaveChangesPerfil_Click"/>
+                <Button x:Name="buttonCancelUpdate" Content="{x:Static language:Lang.cancel}" Margin="524,86,22,418" Click="buttonCancelUpdate_Click"/>
+                <Label Content="{x:Static language:Lang.state}" Margin="10,28,596,465" Foreground="#DDFFFFFF" FontSize="20"/>
                 <Image x:Name="imageModifyPerfil" Margin="298,10,252,418"/>
                 <Border BorderBrush="White" CornerRadius="10" Margin="10,71,466,433" Height="32" Background="Black" BorderThickness="1">
-                    <TextBox x:Name="textBoxState" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Foreground="White" FontSize="16" Margin="0,0,-1,0" Width="191" />
+                    <TextBox x:Name="textBoxState" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{x:Static language:Lang.insertState}" VerticalAlignment="Top" Foreground="White" FontSize="16" Margin="0,0,-1,0" Width="191" />
                 </Border>
                 <Image Margin="10,123,10,10" Source="Resources/book.png"/>
                 <ListBox x:Name="listBoxImagesPerfil" ScrollViewer.VerticalScrollBarVisibility="Visible" Cursor="Hand" ItemsSource="{Binding}" Margin="78,145,85,58" SelectionChanged="listBoxImagesPerfil_SelectionChanged">
@@ -80,26 +80,26 @@
         </Border>
         <Border x:Name="borderRoomGame" CornerRadius="20" Opacity="0.9" Background="Black" Margin="336,33,0,0" Visibility="Hidden">
             <Grid HorizontalAlignment="Left" Height="492" VerticalAlignment="Top" Width="640">
-                <Label Content="Room Game" Foreground="White" HorizontalAlignment="Left" Margin="36,3,0,0" VerticalAlignment="Top" FontSize="48" />
+                <Label Content="{x:Static language:Lang.roomGame}" Foreground="White" HorizontalAlignment="Left" Margin="36,3,0,0" VerticalAlignment="Top" FontSize="48" />
                 <ListBox x:Name="listBoxFriendsGame" HorizontalAlignment="Left" Height="346" Margin="36,84,0,0" VerticalAlignment="Top" Width="364" Background="AliceBlue"/>
-                <Button Content="Send invitation" HorizontalAlignment="Left" Margin="452,396,0,0" VerticalAlignment="Top" Width="138" Click="Button_Click"/>
+                <Button Content="{x:Static language:Lang.sendInvitation}" HorizontalAlignment="Left" Margin="452,396,0,0" VerticalAlignment="Top" Width="138" Click="Button_Click"/>
                 <Image HorizontalAlignment="Left" Height="122" Margin="454,150,0,0" VerticalAlignment="Top" Width="154" Source="Resources/neptuno.png"/>
             </Grid>
         </Border>
         <Border x:Name="borderFriends" Margin="336,33,0,0" Opacity="0.9" Background="Black" CornerRadius="10" Visibility="Hidden">
             <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="0.9">
-                <Label Content="Friends List" Foreground="White" HorizontalAlignment="Left" Margin="19,16,0,0" VerticalAlignment="Top" FontSize="48"/>
+                <Label Content="{x:Static language:Lang.friendList}" Foreground="White" HorizontalAlignment="Left" Margin="19,16,0,0" VerticalAlignment="Top" FontSize="48"/>
 
-                <Button x:Name="buttonAddFriend" Content="Add friend" HorizontalAlignment="Left" Margin="408,148,0,0" VerticalAlignment="Top" Width="103" Click="Button_Add_Friend_Click"/>
-                <Button x:Name="buttonRemoveFriend" Content="Remove friend" HorizontalAlignment="Left" Margin="408,200,0,0" VerticalAlignment="Top" Width="136" Click="Button_Remove_Friend_Click"/>
+                <Button x:Name="buttonAddFriend" Content="{x:Static language:Lang.addFriend}" HorizontalAlignment="Left" Margin="408,148,0,0" VerticalAlignment="Top" Width="103" Click="Button_Add_Friend_Click"/>
+                
                 <Image HorizontalAlignment="Left" Height="144" Margin="408,284,0,0" VerticalAlignment="Top" Width="121" Source="Resources/FriendsList.png"/>
                 <ListBox x:Name="listBoxFriends" Background="White" HorizontalAlignment="Left" Height="340" Margin="27,146,0,0" VerticalAlignment="Top" Width="345"/>
 
                 <Border x:Name="borderSearchPlayer" Background="White" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="89" Margin="275,31,0,0" VerticalAlignment="Top" Width="376" CornerRadius="5" Visibility="Hidden">
                     <Grid Margin="0,0,0,9">
-                        <Label Content="Search player: " FontWeight="Bold" Margin="10,10,272,47"/>
+                        <Label Content="{x:Static language:Lang.searchPlayer}" FontWeight="Bold" Margin="10,10,272,47"/>
                         <TextBox x:Name="textBoxSearch" Margin="107,0,10,47"/>
-                        <Button x:Name="buttonSearchPlayer" Content="search" Margin="10,48,10,0" Click="Button_Search_Player_Click" Height="Auto"/>
+                        <Button x:Name="buttonSearchPlayer" Content="{x:Static language:Lang.search}" Margin="10,48,10,0" Click="Button_Search_Player_Click" Height="Auto"/>
                     </Grid>
                 </Border>
                 <Border Background="White" x:Name="Border_Send_Invitation" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="59" Margin="408,417,0,0" VerticalAlignment="Top" Width="243" CornerRadius="15" Visibility="Hidden">
@@ -149,9 +149,9 @@
                                     </LinearGradientBrush>
                                 </Grid.Background>
                                 <Label Content="{Binding nickName}" Foreground="White" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"/>
-                                <Label Content="has invited a game" Foreground="White" FontWeight="Bold" FontSize="14" HorizontalAlignment="Right"/>
-                                <Button x:Name="buttonAcceptGame" Content="Accept" Margin="20,2,20,20" Background="#FFB365F3" Click="buttonAcceptGame_Click"/>
-                                <Button x:Name="buttonDenyGame" Content="Deny" Margin="20,80,20,20" Background="#FFB365F3" Click="buttonDenyGame_Click"/>
+                                <Label Content="{x:Static language:Lang.hasInvitedAGame}" Foreground="White" FontWeight="Bold" FontSize="14" HorizontalAlignment="Right"/>
+                                <Button x:Name="buttonAcceptGame" Content="{x:Static language:Lang.accept}" Margin="20,2,20,20" Background="#FFB365F3" Click="buttonAcceptGame_Click"/>
+                                <Button x:Name="buttonDenyGame" Content="{x:Static language:Lang.deny}" Margin="20,80,20,20" Background="#FFB365F3" Click="buttonDenyGame_Click"/>
                             </Grid>
                         </Border>
                     </Grid>
@@ -239,7 +239,7 @@
                     </Button.Foreground>
 
                 </Button>
-                <Button Content="Return" HorizontalAlignment="Left" Margin="474,10,0,0" VerticalAlignment="Top" Width="114" Height="28" Click="Button_Click_4">
+                <Button Content="{x:Static language:Lang._return}" HorizontalAlignment="Left" Margin="474,10,0,0" VerticalAlignment="Top" Width="114" Height="28" Click="Button_Click_4">
                     <Button.Foreground>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <LinearGradientBrush.RelativeTransform>
@@ -282,7 +282,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </ScrollViewer>
-                <Button x:Name="buttonModifyDeck" Content="Button" HorizontalAlignment="Left" Margin="28,10,0,0" VerticalAlignment="Top" Width="87" Visibility="Hidden" Click="buttonModifyDeck_Click"/>
+                <Button x:Name="buttonModifyDeck" Content="{x:Static language:Lang.modify}" HorizontalAlignment="Left" Margin="28,10,0,0" VerticalAlignment="Top" Width="87" Visibility="Hidden" Click="buttonModifyDeck_Click"/>
             </Grid>
             <Grid x:Name="gridAddDeck" HorizontalAlignment="Left" Height="526" VerticalAlignment="Top" Width="1004" Margin="0,43,0,0" Visibility="Hidden">
                 <Grid.Background>
@@ -345,7 +345,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </ScrollViewer>
-                <Button x:Name="buttonUpdateDeck" Content="Button" HorizontalAlignment="Left" Margin="905,10,0,0" VerticalAlignment="Top" Width="89" Height="29" Click="Button_Click_3" Visibility="Hidden"/>
+                <Button x:Name="buttonUpdateDeck" Content="{x:Static language:Lang.modify}" HorizontalAlignment="Left" Margin="905,10,0,0" VerticalAlignment="Top" Width="89" Height="29" Click="Button_Click_3" Visibility="Hidden"/>
                 <Grid x:Name="gridDeckUpdate" HorizontalAlignment="Left" Height="347" Margin="0,169,0,0" VerticalAlignment="Top" Width="994" MouseUp="gridDeckUpdate_MouseUp" Visibility="Hidden">
 
                     <ListBox Cursor="Hand" BorderBrush="Transparent" Background="Transparent" Name="listBoxCardsToUpdate" ItemsSource="{Binding}" Height="327" Width="979" VerticalAlignment="Top" SelectionMode="Multiple"  >
@@ -405,7 +405,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Border>
-                <Button Content="Return" HorizontalAlignment="Left" Margin="33,22,0,0" VerticalAlignment="Top" Width="120" Background="#FFB24D27" Height="36" BorderBrush="#FFDE9135" Click="Button_Click6"/>
+                <Button Content="{x:Static language:Lang._return}" HorizontalAlignment="Left" Margin="33,22,0,0" VerticalAlignment="Top" Width="120" Background="#FFB24D27" Height="36" BorderBrush="#FFDE9135" Click="Button_Click6"/>
             </Grid>
 
         </Grid>
@@ -439,8 +439,8 @@
                                         <Grid>
                                             <Label Content="{Binding nicknamePlayer}" FontSize="18" Foreground="White" Margin="140,0,0,0"/>
                                             <Label Content="{Binding stateRequest}" FontSize="18" Foreground="White" Margin="380,0,0,0"/>
-                                            <Button x:Name="buttonAcceptRequest" Content="Accept" Margin="00,30,200,0" Height="25" Width="150" Click="buttonAcceptRequest_Click"/>
-                                            <Button x:Name="buttonDenyRequest" Content="Deny" Margin="200,30,0,0" Height="25" Width="150" Click="buttonDenyRequest_Click"/>
+                                            <Button x:Name="buttonAcceptRequest" Content="{x:Static language:Lang.accept}" Margin="00,30,200,0" Height="25" Width="150" Click="buttonAcceptRequest_Click"/>
+                                            <Button x:Name="buttonDenyRequest" Content="{x:Static language:Lang.deny}" Margin="200,30,0,0" Height="25" Width="150" Click="buttonDenyRequest_Click"/>
                                         </Grid>
                                     </Border>
                                 </Grid>

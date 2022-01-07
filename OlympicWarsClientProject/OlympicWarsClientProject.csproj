@@ -94,6 +94,7 @@
       <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
     <Compile Include="Validations\Validator.cs" />
+    <Compile Include="Validations\ValidatorDeck.cs" />
     <Compile Include="Validations\ValidatorLogin.cs" />
   </ItemGroup>
   <ItemGroup>

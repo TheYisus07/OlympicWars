@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
   <data name="addDeck" xml:space="preserve">
     <value>Add deck</value>
+  </data>
+  <data name="addFriend" xml:space="preserve">
+    <value>Add friend</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
   <data name="cards" xml:space="preserve">
     <value>Cards</value>
@@ -129,6 +138,9 @@
   <data name="decks" xml:space="preserve">
     <value>Decks</value>
   </data>
+  <data name="deny" xml:space="preserve">
+    <value>Deny</value>
+  </data>
   <data name="en" xml:space="preserve">
     <value>English</value>
   </data>
@@ -138,19 +150,55 @@
   <data name="es" xml:space="preserve">
     <value>Spanish</value>
   </data>
+  <data name="friendList" xml:space="preserve">
+    <value>Friend List</value>
+  </data>
+  <data name="friends" xml:space="preserve">
+    <value>Friends</value>
+  </data>
+  <data name="hasInvitedAGame" xml:space="preserve">
+    <value>has invited a game</value>
+  </data>
+  <data name="history" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="insertState" xml:space="preserve">
+    <value>Insert a State</value>
+  </data>
   <data name="login" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="modify" xml:space="preserve">
     <value>Modify</value>
   </data>
+  <data name="nowIsYourTurn" xml:space="preserve">
+    <value>Now is your turn to Attack</value>
+  </data>
   <data name="return" xml:space="preserve">
     <value>Return</value>
+  </data>
+  <data name="roomGame" xml:space="preserve">
+    <value>Room Game</value>
   </data>
   <data name="save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="searchPlayer" xml:space="preserve">
+    <value>Search Player: </value>
+  </data>
+  <data name="sendInvitation" xml:space="preserve">
+    <value>Send invitation</value>
+  </data>
   <data name="sendMessage" xml:space="preserve">
     <value>Send Message</value>
+  </data>
+  <data name="state" xml:space="preserve">
+    <value>State:</value>
+  </data>
+  <data name="viewProfile" xml:space="preserve">
+    <value>View Profile</value>
   </data>
 </root>

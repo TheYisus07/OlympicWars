@@ -70,11 +70,38 @@ namespace OlympicWarsClientProject.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string accept {
+            get {
+                return ResourceManager.GetString("accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add deck.
         /// </summary>
         public static string addDeck {
             get {
                 return ResourceManager.GetString("addDeck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add friend.
+        /// </summary>
+        public static string addFriend {
+            get {
+                return ResourceManager.GetString("addFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string cancel {
+            get {
+                return ResourceManager.GetString("cancel", resourceCulture);
             }
         }
         
@@ -106,6 +133,15 @@ namespace OlympicWarsClientProject.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deny.
+        /// </summary>
+        public static string deny {
+            get {
+                return ResourceManager.GetString("deny", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         public static string en {
@@ -133,6 +169,51 @@ namespace OlympicWarsClientProject.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Friend List.
+        /// </summary>
+        public static string friendList {
+            get {
+                return ResourceManager.GetString("friendList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friends.
+        /// </summary>
+        public static string friends {
+            get {
+                return ResourceManager.GetString("friends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to has invited a game.
+        /// </summary>
+        public static string hasInvitedAGame {
+            get {
+                return ResourceManager.GetString("hasInvitedAGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string history {
+            get {
+                return ResourceManager.GetString("history", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert a State.
+        /// </summary>
+        public static string insertState {
+            get {
+                return ResourceManager.GetString("insertState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string login {
@@ -151,6 +232,24 @@ namespace OlympicWarsClientProject.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Now is your turn to Attack.
+        /// </summary>
+        public static string nowIsYourTurn {
+            get {
+                return ResourceManager.GetString("nowIsYourTurn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Room Game.
+        /// </summary>
+        public static string roomGame {
+            get {
+                return ResourceManager.GetString("roomGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string save {
@@ -160,11 +259,56 @@ namespace OlympicWarsClientProject.Properties.Langs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string search {
+            get {
+                return ResourceManager.GetString("search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Player: .
+        /// </summary>
+        public static string searchPlayer {
+            get {
+                return ResourceManager.GetString("searchPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send invitation.
+        /// </summary>
+        public static string sendInvitation {
+            get {
+                return ResourceManager.GetString("sendInvitation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send Message.
         /// </summary>
         public static string sendMessage {
             get {
                 return ResourceManager.GetString("sendMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State:.
+        /// </summary>
+        public static string state {
+            get {
+                return ResourceManager.GetString("state", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Profile.
+        /// </summary>
+        public static string viewProfile {
+            get {
+                return ResourceManager.GetString("viewProfile", resourceCulture);
             }
         }
     }
