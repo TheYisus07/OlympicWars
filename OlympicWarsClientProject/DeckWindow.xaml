@@ -1,0 +1,223 @@
+﻿<Window x:Class="OlympicWarsClientProject.DeckWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OlympicWarsClientProject"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        xmlns:language="clr-namespace:OlympicWarsClientProject.Properties.Langs"
+        Title="MainWindow" Height="600" Width="1012">
+    <Window.Background>
+        <ImageBrush ImageSource="Resources/background3.png"/>
+    </Window.Background>
+
+    <Grid>
+        <Border BorderThickness="1" HorizontalAlignment="Left" Height="37" VerticalAlignment="Top" Width="1004" RenderTransformOrigin="0.5,0.5">
+            <Border.BorderBrush>
+                <SolidColorBrush Color="#FFCCEE59" Opacity="0.8"/>
+            </Border.BorderBrush>
+            <Border.Effect>
+                <DropShadowEffect  BlurRadius="2" Direction="-98" Color="#FF313B97" RenderingBias="Quality" ShadowDepth="4"/>
+            </Border.Effect>
+            <Label x:Name="labelPlayerName" Content="" Margin="871,1,-1,-1" FontSize="20" FontFamily="Cooper Black">
+                <Label.Foreground>
+                    <SolidColorBrush Color="#DD000000" Opacity="0.8"/>
+                </Label.Foreground>
+            </Label>
+        </Border>
+        <Label Content="{x:Static language:Lang.decks}" HorizontalAlignment="Left" Margin="477,1,0,0" VerticalAlignment="Top" FontSize="24" FontFamily="Old English Text MT" Width="72">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="26.565" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFE3E69F" Offset="0.584"/>
+                    <GradientStop Color="White" Offset="1"/>
+                    <GradientStop Color="#FF131313" Offset="0.018"/>
+                    <GradientStop Color="#FF323228" Offset="0.161"/>
+                    <GradientStop Color="#FF424233" Offset="0.304"/>
+                    <GradientStop Color="#FFE7E9AD" Offset="0.754"/>
+                    <GradientStop Color="#FFEFF0C8" Offset="0.912"/>
+                    <GradientStop Color="#FFE3E6A0" Offset="0.675"/>
+                    <GradientStop Color="#FFB9BB82" Offset="0.498"/>
+                    <GradientStop Color="#FF9C9E6F" Offset="0.416"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+
+        <Grid HorizontalAlignment="Left" Height="36" Margin="463,1,0,0" VerticalAlignment="Top" Width="86">
+            <Grid.Effect>
+                <BlurEffect/>
+            </Grid.Effect>
+        </Grid>
+        <ScrollViewer  Height="500" Margin="825,59,0,0" Width="169">
+            <ListBox  MouseUp="ListBoxDecksClicked" Cursor="Hand" BorderBrush="Transparent" Background="Transparent" Name="listBoxDecks" ItemsSource="{Binding}" VerticalAlignment="Top" Height="479" Width="159" >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Label Content="{Binding deckName}" Foreground="White" FontSize="16" FontFamily="Segoe UI Black" Height="30"></Label>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+        <Grid HorizontalAlignment="Left" Height="509" VerticalAlignment="Top" Width="796" Margin="10,50,0,0">
+            <Label Content="{x:Static language:Lang.cardsondeck}" HorizontalAlignment="Left" Margin="196,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Lucida Calligraphy" FontSize="18" Foreground="#DDFFFFFF"/>
+            <Button x:Name="buttonAddDeckPane" Content="{x:Static language:Lang.addDeck}" HorizontalAlignment="Left" Margin="641,10,0,0" VerticalAlignment="Top" Width="145" Click="Button_Click"  Height="26" Background="#FF673AB7" SnapsToDevicePixels="True" >
+                <Button.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                <RotateTransform Angle="-135" CenterY="0.5" CenterX="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="#FF626431" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                        <GradientStop Color="#FFE3E69F" Offset="0.57"/>
+                    </LinearGradientBrush>
+                </Button.Foreground>
+            </Button>
+            <ScrollViewer HorizontalAlignment="Left" Height="411" Margin="28,74,0,0" VerticalAlignment="Top" Width="744">
+                <ListBox Cursor="Hand" BorderBrush="Transparent" Background="Transparent" Name="listBoxCardFromDeck" ItemsSource="{Binding}" VerticalAlignment="Bottom" Height="405" Width="740">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="4" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid  Height="200" Width="140" >
+                                <Image Source="{Binding image}">
+                                    <Image.Effect>
+                                        <DropShadowEffect BlurRadius="10" Direction="320" ShadowDepth="5" Opacity="0.2"/>
+                                    </Image.Effect>
+                                </Image>
+                                <Image Source="{Binding attributeImage}" Width="20" Margin="116,0,0,173">
+                                    <Image.Effect>
+                                        <DropShadowEffect BlurRadius="0" Direction="0" ShadowDepth="4" Opacity="1"/>
+                                    </Image.Effect>
+                                </Image>
+                                <Label Content="{Binding damage}"  Margin="17,145,0,0" Foreground="White" FontSize="9" FontWeight="Normal" FontFamily="MV Boli"></Label>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+            <Button x:Name="buttonModifyDeck" Content="Button" HorizontalAlignment="Left" Margin="28,10,0,0" VerticalAlignment="Top" Width="87" Visibility="Hidden" Click="buttonModifyDeck_Click"/>
+        </Grid>
+        <Grid x:Name="gridAddDeck" HorizontalAlignment="Left" Height="526" VerticalAlignment="Top" Width="1004" Margin="0,43,0,0" Visibility="Hidden">
+            <Grid.Background>
+                <ImageBrush ImageSource="Resources/OlympoGods.png"/>
+            </Grid.Background>
+            <Grid Name="gridCards" HorizontalAlignment="Center" Height="357" VerticalAlignment="Top" Width="994" Margin="0,169,10,0" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10,10,0,0">
+                    <ListBox Cursor="Hand" BorderBrush="Transparent" Background="Transparent" Name="listBoxCards" ItemsSource="{Binding}" Height="337" Width="972" VerticalAlignment="Top" SelectionMode="Multiple"  >
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="5" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="250" HorizontalAlignment="Center">
+                                    <Image Source="{Binding image}" Width="160">
+                                        <Image.Effect>
+                                            <DropShadowEffect BlurRadius="10" Direction="320" ShadowDepth="5" Opacity="0.2"/>
+                                        </Image.Effect>
+                                    </Image>
+                                    <Image Source="{Binding attributeImage}" Width="40" Margin="130,0,0,190">
+                                        <Image.Effect>
+                                            <DropShadowEffect BlurRadius="0" Direction="0" ShadowDepth="4" Opacity="1"/>
+                                        </Image.Effect>
+                                    </Image>
+                                    <Label Content="{Binding damage}"  Margin="19,176,0,0" Foreground="White" FontSize="12" FontWeight="Normal" FontFamily="MV Boli"></Label>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+            </Grid>
+            <Button Content="{x:Static language:Lang._return}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="95" Height="28" Click="Button_Click_1"/>
+            <Button x:Name="buttonSaveDeck" Content="{x:Static language:Lang.save}" HorizontalAlignment="Left" Margin="905,10,0,0" VerticalAlignment="Top" Width="89" Height="29" Click="Button_Click_2" Visibility="Hidden"/>
+            <TextBox x:Name="textBoxDeckName" HorizontalAlignment="Left" Height="24" Margin="387,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186"/>
+            <ScrollViewer x:Name="scrollViewerCardsToModify" HorizontalAlignment="Left" Height="92" Margin="32,53,0,0" VerticalAlignment="Top" Width="943">
+                <ListBox x:Name="ListBoxCardsAdded"  Cursor="Hand" BorderBrush="Transparent" Background="Transparent" ItemsSource="{Binding}" Height="82" Width="943" SelectionMode="Multiple" MouseUp="ListBoxCardsAdded_MouseUp">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Image Source="{Binding image}" Width="50" Margin="0,0,0,0" >
+                                    <Image.Effect>
+                                        <DropShadowEffect BlurRadius="10" Direction="320" ShadowDepth="5" Opacity="0.2"/>
+                                    </Image.Effect>
+                                </Image>
+                                <Image Source="{Binding attributeImage}" Width="9" Margin="41,-63,0,0">
+                                </Image>
+                                <Label Content="{Binding damage}"  Margin="1.5,48,0,0" Foreground="White" FontSize="4" FontWeight="Normal" FontFamily="MV Boli"></Label>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+            <Button x:Name="buttonUpdateDeck" Content="Button" HorizontalAlignment="Left" Margin="905,10,0,0" VerticalAlignment="Top" Width="89" Height="29" Click="Button_Click_3" Visibility="Hidden"/>
+            <Grid x:Name="gridDeckUpdate" HorizontalAlignment="Left" Height="347" Margin="0,169,0,0" VerticalAlignment="Top" Width="994" MouseUp="gridDeckUpdate_MouseUp" Visibility="Hidden">
+                
+                    <ListBox Cursor="Hand" BorderBrush="Transparent" Background="Transparent" Name="listBoxCardsToUpdate" ItemsSource="{Binding}" Height="327" Width="979" VerticalAlignment="Top" SelectionMode="Multiple"  >
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="4" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Image Source="{Binding image}" Width="160" Margin="0,0,0,0">
+                                        <Image.Effect>
+                                            <DropShadowEffect BlurRadius="10" Direction="320" ShadowDepth="5" Opacity="0.2"/>
+                                        </Image.Effect>
+                                    </Image>
+                                    <Image Source="{Binding attributeImage}" Width="20" Margin="135,0,0,192">
+                                        <Image.Effect>
+                                            <DropShadowEffect BlurRadius="0" Direction="0" ShadowDepth="4" Opacity="1"/>
+                                        </Image.Effect>
+                                    </Image>
+                                    <Label Content="{Binding damage}"  Margin="20,165,0,0" Foreground="White" FontSize="9" FontWeight="Normal" FontFamily="MV Boli"></Label>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>

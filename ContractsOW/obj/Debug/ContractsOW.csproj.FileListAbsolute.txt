@@ -1,0 +1,12 @@
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\bin\Debug\ContractsOW.dll.config
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\bin\Debug\ContractsOW.dll
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\bin\Debug\ContractsOW.pdb
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\bin\Debug\EntityFramework.dll
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\bin\Debug\EntityFramework.xml
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\obj\Debug\ContractsOW.csproj.CoreCompileInputs.cache
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\obj\Debug\ContractsOW.csproj.CopyComplete
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\obj\Debug\ContractsOW.dll
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\obj\Debug\ContractsOW.pdb
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\ContractsOW\obj\Debug\ContractsOW.csproj.AssemblyReference.cache

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OlympicWarsModelStoreContainer" CdmEntityContainer="OlympicWarsContext">
+    <EntitySetMapping Name="Cards">
+      <EntityTypeMapping TypeName="OlympicWarsModel.Card">
+        <MappingFragment StoreEntitySet="Card">
+          <ScalarProperty Name="nameCard" ColumnName="nameCard" />
+          <ScalarProperty Name="attribute" ColumnName="attribute" />
+          <ScalarProperty Name="damage" ColumnName="damage" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="attributeImage" ColumnName="attributeImage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CollectedCards">
+      <EntityTypeMapping TypeName="OlympicWarsModel.CollectedCard">
+        <MappingFragment StoreEntitySet="CollectedCard">
+          <ScalarProperty Name="idCollectedCard" ColumnName="idCollectedCard" />
+          <ScalarProperty Name="nameDeck" ColumnName="nameDeck" />
+          <ScalarProperty Name="nameCard" ColumnName="nameCard" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Decks">
+      <EntityTypeMapping TypeName="OlympicWarsModel.Deck">
+        <MappingFragment StoreEntitySet="Deck">
+          <ScalarProperty Name="deckName" ColumnName="deckName" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="playerName" ColumnName="playerName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="OlympicWarsModel.Game">
+        <MappingFragment StoreEntitySet="Game">
+          <ScalarProperty Name="idGame" ColumnName="idGame" />
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="dateGame" ColumnName="dateGame" />
+          <ScalarProperty Name="stateGame" ColumnName="stateGame" />
+          <ScalarProperty Name="playerName" ColumnName="playerName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Players">
+      <EntityTypeMapping TypeName="OlympicWarsModel.Player">
+        <MappingFragment StoreEntitySet="Player">
+          <ScalarProperty Name="nickName" ColumnName="nickName" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="imageProfile" ColumnName="imageProfile" />
+          <ScalarProperty Name="state" ColumnName="state" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlayerGames">
+      <EntityTypeMapping TypeName="OlympicWarsModel.PlayerGame">
+        <MappingFragment StoreEntitySet="PlayerGame">
+          <ScalarProperty Name="idPlayerGame" ColumnName="idPlayerGame" />
+          <ScalarProperty Name="idGame" ColumnName="idGame" />
+          <ScalarProperty Name="playerName" ColumnName="playerName" />
+          <ScalarProperty Name="state" ColumnName="state" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FriendRequests">
+      <EntityTypeMapping TypeName="OlympicWarsModel.FriendRequest">
+        <MappingFragment StoreEntitySet="FriendRequest">
+          <ScalarProperty Name="stateRequest" ColumnName="stateRequest" />
+          <ScalarProperty Name="nicknameFriend" ColumnName="nicknameFriend" />
+          <ScalarProperty Name="nicknamePlayer" ColumnName="nicknamePlayer" />
+          <ScalarProperty Name="idFriendRequest" ColumnName="idFriendRequest" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

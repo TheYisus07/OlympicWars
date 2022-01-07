@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OlympicWarsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="nameCard" />
+    </Key>
+    <Property Name="nameCard" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="attribute" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="damage" Type="Int32" Nullable="false" />
+    <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="attributeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="CollectedCards" Relationship="Self.PK_dbo_CollectedCard_dbo_Card" FromRole="Card" ToRole="CollectedCard" />
+  </EntityType>
+  <EntityType Name="CollectedCard">
+    <Key>
+      <PropertyRef Name="idCollectedCard" />
+    </Key>
+    <Property Name="idCollectedCard" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nameDeck" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nameCard" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Card" Relationship="Self.PK_dbo_CollectedCard_dbo_Card" FromRole="CollectedCard" ToRole="Card" />
+    <NavigationProperty Name="Deck" Relationship="Self.PK_dbo_CollectedCard_dbo_Deck" FromRole="CollectedCard" ToRole="Deck" />
+  </EntityType>
+  <EntityType Name="Deck">
+    <Key>
+      <PropertyRef Name="deckName" />
+    </Key>
+    <Property Name="deckName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="type" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="playerName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CollectedCards" Relationship="Self.PK_dbo_CollectedCard_dbo_Deck" FromRole="Deck" ToRole="CollectedCard" />
+    <NavigationProperty Name="Player" Relationship="Self.PK_dbo_Deck_dbo_Player" FromRole="Deck" ToRole="Player" />
+  </EntityType>
+  <EntityType Name="Game">
+    <Key>
+      <PropertyRef Name="idGame" />
+    </Key>
+    <Property Name="idGame" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="duration" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="dateGame" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="stateGame" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="playerName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Player" Relationship="Self.PK_dbo_Game_dbo_Player" FromRole="Game" ToRole="Player" />
+    <NavigationProperty Name="PlayerGames" Relationship="Self.PK_dbo_PlayerGame_dbo_Game" FromRole="Game" ToRole="PlayerGame" />
+  </EntityType>
+  <EntityType Name="Player">
+    <Key>
+      <PropertyRef Name="nickName" />
+    </Key>
+    <Property Name="nickName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="imageProfile" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="state" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Decks" Relationship="Self.PK_dbo_Deck_dbo_Player" FromRole="Player" ToRole="Deck" />
+    <NavigationProperty Name="Games" Relationship="Self.PK_dbo_Game_dbo_Player" FromRole="Player" ToRole="Game" />
+    <NavigationProperty Name="PlayerGames" Relationship="Self.PK_dbo_PlayerGame_dbo_Player" FromRole="Player" ToRole="PlayerGame" />
+    <NavigationProperty Name="FriendRequests" Relationship="OlympicWarsModel.PK_dbo_FriendRequest_dbo_Player" FromRole="Player" ToRole="FriendRequest" />
+  </EntityType>
+  <EntityType Name="PlayerGame">
+    <Key>
+      <PropertyRef Name="idPlayerGame" />
+    </Key>
+    <Property Name="idPlayerGame" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idGame" Type="Int32" Nullable="false" />
+    <Property Name="playerName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="state" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Game" Relationship="Self.PK_dbo_PlayerGame_dbo_Game" FromRole="PlayerGame" ToRole="Game" />
+    <NavigationProperty Name="Player" Relationship="Self.PK_dbo_PlayerGame_dbo_Player" FromRole="PlayerGame" ToRole="Player" />
+  </EntityType>
+  <Association Name="PK_dbo_CollectedCard_dbo_Card">
+    <End Role="Card" Type="Self.Card" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CollectedCard" Type="Self.CollectedCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="nameCard" />
+      </Principal>
+      <Dependent Role="CollectedCard">
+        <PropertyRef Name="nameCard" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_dbo_CollectedCard_dbo_Deck">
+    <End Role="Deck" Type="Self.Deck" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CollectedCard" Type="Self.CollectedCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deck">
+        <PropertyRef Name="deckName" />
+      </Principal>
+      <Dependent Role="CollectedCard">
+        <PropertyRef Name="nameDeck" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_dbo_Deck_dbo_Player">
+    <End Role="Player" Type="Self.Player" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Deck" Type="Self.Deck" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="nickName" />
+      </Principal>
+      <Dependent Role="Deck">
+        <PropertyRef Name="playerName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_dbo_Game_dbo_Player">
+    <End Role="Player" Type="Self.Player" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Game" Type="Self.Game" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="nickName" />
+      </Principal>
+      <Dependent Role="Game">
+        <PropertyRef Name="playerName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_dbo_PlayerGame_dbo_Game">
+    <End Role="Game" Type="Self.Game" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PlayerGame" Type="Self.PlayerGame" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="idGame" />
+      </Principal>
+      <Dependent Role="PlayerGame">
+        <PropertyRef Name="idGame" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_dbo_PlayerGame_dbo_Player">
+    <End Role="Player" Type="Self.Player" Multiplicity="1" />
+    <End Role="PlayerGame" Type="Self.PlayerGame" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="nickName" />
+      </Principal>
+      <Dependent Role="PlayerGame">
+        <PropertyRef Name="playerName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OlympicWarsContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cards" EntityType="Self.Card" />
+    <EntitySet Name="CollectedCards" EntityType="Self.CollectedCard" />
+    <EntitySet Name="Decks" EntityType="Self.Deck" />
+    <EntitySet Name="Games" EntityType="Self.Game" />
+    <EntitySet Name="Players" EntityType="Self.Player" />
+    <EntitySet Name="PlayerGames" EntityType="Self.PlayerGame" />
+    <AssociationSet Name="PK_dbo_CollectedCard_dbo_Card" Association="Self.PK_dbo_CollectedCard_dbo_Card">
+      <End Role="Card" EntitySet="Cards" />
+      <End Role="CollectedCard" EntitySet="CollectedCards" />
+    </AssociationSet>
+    <AssociationSet Name="PK_dbo_CollectedCard_dbo_Deck" Association="Self.PK_dbo_CollectedCard_dbo_Deck">
+      <End Role="Deck" EntitySet="Decks" />
+      <End Role="CollectedCard" EntitySet="CollectedCards" />
+    </AssociationSet>
+    <AssociationSet Name="PK_dbo_Deck_dbo_Player" Association="Self.PK_dbo_Deck_dbo_Player">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="Deck" EntitySet="Decks" />
+    </AssociationSet>
+    <AssociationSet Name="PK_dbo_Game_dbo_Player" Association="Self.PK_dbo_Game_dbo_Player">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="Game" EntitySet="Games" />
+    </AssociationSet>
+    <AssociationSet Name="PK_dbo_PlayerGame_dbo_Game" Association="Self.PK_dbo_PlayerGame_dbo_Game">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="PlayerGame" EntitySet="PlayerGames" />
+    </AssociationSet>
+    <AssociationSet Name="PK_dbo_PlayerGame_dbo_Player" Association="Self.PK_dbo_PlayerGame_dbo_Player">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="PlayerGame" EntitySet="PlayerGames" />
+    </AssociationSet>
+    <EntitySet Name="FriendRequests" EntityType="OlympicWarsModel.FriendRequest" />
+    <AssociationSet Name="PK_dbo_FriendRequest_dbo_Player" Association="OlympicWarsModel.PK_dbo_FriendRequest_dbo_Player">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="FriendRequest" EntitySet="FriendRequests" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="FriendRequest">
+    <Key>
+      <PropertyRef Name="idFriendRequest" />
+    </Key>
+    <Property Name="idFriendRequest" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nicknamePlayer" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="nicknameFriend" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="stateRequest" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Player" Relationship="OlympicWarsModel.PK_dbo_FriendRequest_dbo_Player" FromRole="FriendRequest" ToRole="Player" />
+  </EntityType>
+  <Association Name="PK_dbo_FriendRequest_dbo_Player">
+    <End Type="OlympicWarsModel.Player" Role="Player" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="OlympicWarsModel.FriendRequest" Role="FriendRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="nickName" />
+      </Principal>
+      <Dependent Role="FriendRequest">
+        <PropertyRef Name="nicknameFriend" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

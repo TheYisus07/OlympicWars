@@ -1,0 +1,15 @@
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\bin\Debug\Server.exe.config
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\bin\Debug\Server.exe
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\bin\Debug\Server.pdb
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\bin\Debug\EntityFramework.dll
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\bin\Debug\EntityFramework.xml
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\obj\Debug\Server.csproj.AssemblyReference.cache
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\obj\Debug\Server.csproj.CopyComplete
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\obj\Debug\Server.exe
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\obj\Debug\Server.pdb
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\bin\Debug\ContractsOW.dll
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\bin\Debug\ContractsOW.pdb
+C:\Users\INNOVA TEC\source\repos\OlympicWarsGUI\Server\bin\Debug\ContractsOW.dll.config

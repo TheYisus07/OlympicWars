@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OlympicWarsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="nameCard" />
+    </Key>
+    <Property Name="nameCard" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="attribute" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="damage" Type="int" Nullable="false" />
+    <Property Name="image" Type="image" Nullable="false" />
+    <Property Name="attributeImage" Type="image" />
+  </EntityType>
+  <EntityType Name="CollectedCard">
+    <Key>
+      <PropertyRef Name="idCollectedCard" />
+    </Key>
+    <Property Name="idCollectedCard" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nameDeck" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="nameCard" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Deck">
+    <Key>
+      <PropertyRef Name="deckName" />
+    </Key>
+    <Property Name="deckName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="type" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="playerName" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FriendRequest">
+    <Key>
+      <PropertyRef Name="idFriendRequest" />
+    </Key>
+    <Property Name="idFriendRequest" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nicknamePlayer" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="nicknameFriend" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="stateRequest" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Game">
+    <Key>
+      <PropertyRef Name="idGame" />
+    </Key>
+    <Property Name="idGame" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="duration" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="dateGame" Type="date" Nullable="false" />
+    <Property Name="stateGame" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="playerName" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Player">
+    <Key>
+      <PropertyRef Name="nickName" />
+    </Key>
+    <Property Name="nickName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="imageProfile" Type="image" />
+    <Property Name="state" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="PlayerGame">
+    <Key>
+      <PropertyRef Name="idPlayerGame" />
+    </Key>
+    <Property Name="idPlayerGame" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idGame" Type="int" Nullable="false" />
+    <Property Name="playerName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="state" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <Association Name="PK_dbo_CollectedCard_dbo_Card">
+    <End Role="Card" Type="Self.Card" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CollectedCard" Type="Self.CollectedCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Card">
+        <PropertyRef Name="nameCard" />
+      </Principal>
+      <Dependent Role="CollectedCard">
+        <PropertyRef Name="nameCard" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_dbo_CollectedCard_dbo_Deck">
+    <End Role="Deck" Type="Self.Deck" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CollectedCard" Type="Self.CollectedCard" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deck">
+        <PropertyRef Name="deckName" />
+      </Principal>
+      <Dependent Role="CollectedCard">
+        <PropertyRef Name="nameDeck" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_dbo_Deck_dbo_Player">
+    <End Role="Player" Type="Self.Player" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Deck" Type="Self.Deck" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="nickName" />
+      </Principal>
+      <Dependent Role="Deck">
+        <PropertyRef Name="playerName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_dbo_FriendRequest_dbo_Player">
+    <End Role="Player" Type="Self.Player" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FriendRequest" Type="Self.FriendRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="nickName" />
+      </Principal>
+      <Dependent Role="FriendRequest">
+        <PropertyRef Name="nicknameFriend" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OlympicWarsModelStoreContainer">
+    <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CollectedCard" EntityType="Self.CollectedCard" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Deck" EntityType="Self.Deck" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FriendRequest" EntityType="Self.FriendRequest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PlayerGame" EntityType="Self.PlayerGame" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="PK_dbo_CollectedCard_dbo_Card" Association="Self.PK_dbo_CollectedCard_dbo_Card">
+      <End Role="Card" EntitySet="Card" />
+      <End Role="CollectedCard" EntitySet="CollectedCard" />
+    </AssociationSet>
+    <AssociationSet Name="PK_dbo_CollectedCard_dbo_Deck" Association="Self.PK_dbo_CollectedCard_dbo_Deck">
+      <End Role="Deck" EntitySet="Deck" />
+      <End Role="CollectedCard" EntitySet="CollectedCard" />
+    </AssociationSet>
+    <AssociationSet Name="PK_dbo_Deck_dbo_Player" Association="Self.PK_dbo_Deck_dbo_Player">
+      <End Role="Player" EntitySet="Player" />
+      <End Role="Deck" EntitySet="Deck" />
+    </AssociationSet>
+    <AssociationSet Name="PK_dbo_FriendRequest_dbo_Player" Association="Self.PK_dbo_FriendRequest_dbo_Player">
+      <End Role="Player" EntitySet="Player" />
+      <End Role="FriendRequest" EntitySet="FriendRequest" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

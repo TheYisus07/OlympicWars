@@ -1,0 +1,6 @@
+﻿The model was generated with warnings or errors.OlympicWarsModel.edmxPlease see the Error List for more details. These issues must be fixed before running your application.
+Loading metadata from the database took 00:00:00.8882591.
+Generating the model took 00:00:01.7676698.
+Generated model file: OlympicWarsModel.edmx.
+Loading metadata from the database took 00:00:00.4774252.
+Generating the model took 00:00:00.4270620.

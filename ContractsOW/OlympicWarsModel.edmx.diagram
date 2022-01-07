@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3329bbdbf22c49d09f05a07a3dcc82ba" Name="Diagram1">
+        <EntityTypeShape EntityType="OlympicWarsModel.Card" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="OlympicWarsModel.CollectedCard" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OlympicWarsModel.Deck" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OlympicWarsModel.Game" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OlympicWarsModel.Player" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OlympicWarsModel.PlayerGame" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="OlympicWarsModel.PK_dbo_CollectedCard_dbo_Card" ManuallyRouted="false" />
+        <AssociationConnector Association="OlympicWarsModel.PK_dbo_CollectedCard_dbo_Deck" ManuallyRouted="false" />
+        <AssociationConnector Association="OlympicWarsModel.PK_dbo_Deck_dbo_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="OlympicWarsModel.PK_dbo_Game_dbo_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="OlympicWarsModel.PK_dbo_PlayerGame_dbo_Game" ManuallyRouted="false" />
+        <AssociationConnector Association="OlympicWarsModel.PK_dbo_PlayerGame_dbo_Player" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OlympicWarsModel.FriendRequest" Width="1.5" PointX="3" PointY="10.75" />
+        <AssociationConnector Association="OlympicWarsModel.PK_dbo_FriendRequest_dbo_Player" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

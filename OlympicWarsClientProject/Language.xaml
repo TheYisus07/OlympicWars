@@ -1,0 +1,33 @@
+﻿<Window x:Class="OlympicWarsClientProject.Language"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OlympicWarsClientProject"
+        mc:Ignorable="d"
+        xmlns:language="clr-namespace:OlympicWarsClientProject.Properties.Langs"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        Title="SelectLanguage" Height="250" Width="300">
+    <Grid Background="Black">
+        <Border Background="White">
+            <StackPanel>
+                <Grid>
+                    <Image HorizontalAlignment="Left" Margin="120 30 0 25" Height="50" VerticalAlignment="Top" Width="50" Source="Resources/Language.png"/>
+                </Grid>
+
+                <Grid>
+                    <StackPanel>
+                        <!--<Label Content="{x:Static language:Lang.select_language}"></Label>-->
+                        <ComboBox Name="cmb" FontWeight="Bold" Width="180" Margin="5 5 5 5" VerticalAlignment="Center" SelectionChanged="ComboBox_ChooseLanguage">
+                            <ComboBoxItem Content="{x:Static language:Lang.en}"/>
+                            <ComboBoxItem Content="{x:Static language:Lang.es}"/>
+                        </ComboBox>
+
+                        <Button  Content="{x:Static language:Lang.enter}" HorizontalAlignment="Center" Width="75" Margin="0 20" Click="Button_OpenLogin"/>
+                        
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
