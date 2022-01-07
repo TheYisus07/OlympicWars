@@ -19,6 +19,7 @@
         <AssociationConnector Association="OlympicWarsModel.PK_dbo_PlayerGame_dbo_Player" ManuallyRouted="false" />
         <EntityTypeShape EntityType="OlympicWarsModel.FriendRequest" Width="1.5" PointX="3" PointY="10.75" />
         <AssociationConnector Association="OlympicWarsModel.PK_dbo_FriendRequest_dbo_Player" />
+        <EntityTypeShape EntityType="OlympicWarsModel.PerfilImage" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

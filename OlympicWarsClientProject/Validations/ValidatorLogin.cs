@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OlympicWarsClientProject.Validations
 {
-    public class ValidatorLogin : AbstractValidator<Player>
+    public class ValidatorLogin : AbstractValidator<PlayerContract>
     {
         public ValidatorLogin()
         {

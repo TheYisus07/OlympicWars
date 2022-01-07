@@ -87,6 +87,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OlympicWarsModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="PerfilImage.cs">
+      <DependentUpon>OlympicWarsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Player.cs">
       <DependentUpon>OlympicWarsModel.tt</DependentUpon>
     </Compile>
@@ -95,6 +98,7 @@
       <DependentUpon>OlympicWarsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PlayerService.cs" />
+    <Compile Include="ProfieImageContract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

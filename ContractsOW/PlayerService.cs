@@ -16,11 +16,15 @@ namespace ContractsOW
 
         private OlympicWarsContext _context = new OlympicWarsContext();
         private List<PlayerContract> _playerList = new List<PlayerContract>();
+        private List<PlayerContract> _playerInGame = new List<PlayerContract>();
 
         public void AceptInvitation(string playerAcepted, string playerHost)
         {
             PlayerContract player = _playerList.FirstOrDefault(p => p.nickName == playerHost);
+            PlayerContract player2 = _playerList.FirstOrDefault(p => p.nickName == playerAcepted);
             player.CallbackChannel.receiveConfirmation(playerAcepted);
+            _playerInGame.Add(player);
+            _playerInGame.Add(player2);
         }
 
         public void AddCardInNewTurn(string deckName)
@@ -41,7 +45,7 @@ namespace ContractsOW
                 });
             }
             Random random = new Random();
-            int randomIndex = random.Next(0, 2);
+            int randomIndex = random.Next(0, cardContractList.Count());
             CardContract cardRandom = cardContractList[randomIndex];
             OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().GetCardToNewTurn(cardRandom);
         }
@@ -239,7 +243,6 @@ namespace ContractsOW
                     nameDeck = deckName,
                     nameCard = cardList[i]
                 });
-                //Console.WriteLine(cardList[i]);
             }
             int numberEntries = _context.SaveChanges();
             OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ConfirmDeckSaved(numberEntries);
@@ -255,7 +258,7 @@ namespace ContractsOW
                 stateGame = game.stateGame
             });
             _context.SaveChanges();
-            int lastGameId = _context.Games.ToList().Count();
+            int lastGameId = _context.Games.ToList().LastOrDefault().idGame;
             if(lastGameId != 0)
             {
                 _context.PlayerGames.Add(new PlayerGame
@@ -418,20 +421,20 @@ namespace ContractsOW
             int idGame = game.idGame;
             string durationGame = game.duration;
             string stateGameString = game.stateGame;
-            _context.Database.ExecuteSqlCommand("UPDATE [dbo].[Game] SET [duration] = @durationParameter, [stateGame] = @stateParameter WHERE [idGame] = @idGameParameter", 
-                new SqlParameter("@durationParameter", durationGame), 
-                new SqlParameter("@stateParameter", stateGameString), 
-                new SqlParameter("@idGameParameter", idGame));
-
+            Game gameDB = _context.Games.Where(g => g.idGame == idGame).Select(g => g).FirstOrDefault();
+            if (gameDB != null)
+            {
+                gameDB.duration = durationGame;
+                gameDB.stateGame = stateGameString;
+            }
+            _context.SaveChanges();
         }
 
         public void UpdateGuid(Guid id, PlayerContract player, string nameToSend)
         {
             PlayerContract  playerContract = _playerList.FirstOrDefault(p => p.id == id);
 
-            //PlayerContract playerContract = _playerList.Single(p => p.nickName == player.);
             _playerList.Remove(playerContract);
-            //playerContract.id = id;
             player.CallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>();
             _playerList.Add(player);
             Guid playerId = _playerList.Single(p => p.id == player.id).id;
@@ -455,11 +458,48 @@ namespace ContractsOW
 
 
 
-        public void RegisterUser(Player player)
+        public void RegisterUser(PlayerContract player)
         {
             try
             {
-                _context.Players.Add(player);
+                List<string> cardList = new List<string>();
+                cardList.Add("Afrodita");
+                cardList.Add("Apolo");
+                cardList.Add("Ares");
+                cardList.Add("Artemisa");
+                cardList.Add("Atenea");
+                cardList.Add("Basilisco");
+                cardList.Add("Centauro");
+                cardList.Add("Cerberus");
+                cardList.Add("Cyclope");
+                cardList.Add("Hades");
+                cardList.Add("Hecatonquiro");
+                cardList.Add("Hefesto");
+                cardList.Add("Hera");
+                PerfilImage image = _context.PerfilImages.FirstOrDefault();
+                _context.Players.Add(new Player
+                {
+                    nickName = player.nickName,
+                    password = player.password,
+                    Email = player.email,
+                    imageProfile = image.Image,
+                    state = ""
+                });
+                _context.Decks.Add(new Deck
+                {
+                    deckName = "Default",
+                    type = "fuego",
+                    playerName = player.nickName
+                });
+                
+                for (int i = 0; i < cardList.Count(); i++)
+                {
+                    _context.CollectedCards.Add(new CollectedCard
+                    {
+                        nameDeck = "Default",
+                        nameCard = cardList[i]
+                    });
+                }
                 int numberChange = _context.SaveChanges();
                 OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ConfirmRegistration(numberChange);
             }
@@ -479,7 +519,7 @@ namespace ContractsOW
             }
         }
 
-        public void LoginUser(Player player)
+        public void LoginUser(PlayerContract player)
         {
             Player playerLogin = _context.Players.Single(u => u.nickName == player.nickName);
             PlayerContract playerContract = new PlayerContract();
@@ -505,11 +545,51 @@ namespace ContractsOW
             playerLogin.CallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>();
             _playerList.Add(playerLogin);
 
+            
             foreach (var player in _playerList)
             {
                 if (_playerList != null)
                 {
                     player.CallbackChannel.LoadFriendList(_playerList);
+                }
+            }
+        }
+
+        public void GetPlayerList(PlayerContract playerContract)
+        {
+            string state = "Acepted";
+            List<FriendRequest> friendRequest = _context.FriendRequests.Where(p => (p.nicknameFriend == playerContract.nickName || p.nicknamePlayer == playerContract.nickName) && p.stateRequest == state).ToList();
+            List<PlayerContract> friendContract = new List<PlayerContract>();
+            List<string> playerList = _playerList.Select(p => p.nickName).ToList();
+            List<string> friendRequestList = new List<string>();
+            //friendRequest.Select(f => f.nicknameFriend).ToList();
+            foreach (var friend in friendRequest)
+            {
+                if (friend.nicknameFriend == playerContract.nickName)
+                {
+                    friendRequestList.Add(friend.nicknamePlayer);
+                }
+                else if (friend.nicknamePlayer == playerContract.nickName)
+                {
+                    friendRequestList.Add(friend.nicknameFriend);
+                }
+            }
+            foreach (var friend in _playerList)
+            {
+
+                if (friendRequestList.Contains(friend.nickName))
+                {
+                    friendContract.Add(friend);
+                }
+
+            }
+
+            foreach (var player in _playerList)
+            {
+                if (_playerList != null)
+                {
+                    Console.WriteLine("4");
+                    OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ChargeListOfFriends(friendContract);
                 }
             }
         }
@@ -540,6 +620,7 @@ namespace ContractsOW
         public void SendInvitation(string playerSend, string playerReceive)
         {
             List<FriendRequest> frindRequestsList = _context.FriendRequests.Where(p => p.nicknameFriend == playerReceive).ToList();
+            bool isAcepted = AcceptRequesWhereIsRepeated(playerSend, playerReceive);
             bool canSend = false;
             if(frindRequestsList.Count() == 0)
             {
@@ -553,10 +634,30 @@ namespace ContractsOW
                 }
             }
 
-            if (canSend)
+            if (canSend && isAcepted)
             {
                 SendRequestInvitation(playerSend, playerReceive);
             }
+        }
+
+        private bool AcceptRequesWhereIsRepeated(string playerSend, string playerReceive)
+        {
+            bool canSend = true;
+            string state = "Acepted";
+            List<FriendRequest> friendRequestList = _context.FriendRequests.Where(p => p.nicknameFriend == playerSend).ToList();
+            foreach (var friend in friendRequestList)
+            {
+                if (friend.nicknameFriend == playerSend && friend.nicknamePlayer == playerReceive)
+                {
+                    friend.stateRequest = state;
+                    
+                    canSend = false;
+                    _context.SaveChanges();
+                    List<FriendContract> friendContract = GetRequest(friend.nicknameFriend);
+                    OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ConfirmRequestAnswered(friendContract);
+                }
+            }
+            return canSend;
         }
 
         private void SendRequestInvitation(string playerSend, string playerReceive)
@@ -580,8 +681,14 @@ namespace ContractsOW
 
         public void SearchOfRequests(string playerName)
         {
-            Console.WriteLine(playerName);
-            List<FriendRequest> friendRequest = _context.FriendRequests.Where(p => p.nicknameFriend == playerName).ToList();
+            List<FriendContract> friendContract = GetRequest(playerName);
+            OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().SeeRequests(friendContract);
+        }
+
+        private List<FriendContract> GetRequest(string playerName)
+        {
+            string state = "Acepted";
+            List<FriendRequest> friendRequest = _context.FriendRequests.Where(p => p.nicknameFriend == playerName && p.stateRequest != state).ToList();
             List<FriendContract> friendContract = new List<FriendContract>();
 
             for (int i = 0; i < friendRequest.Count(); i++)
@@ -595,9 +702,7 @@ namespace ContractsOW
                     stateRequest = friendRequest[i].stateRequest
                 });
             }
-            Console.WriteLine(friendContract.Count());
-            Console.WriteLine(friendRequest.Count());
-            OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().SeeRequests(friendContract);
+            return friendContract;
         }
 
         public void SendInvitationGame(string playerName, string frienName)
@@ -610,17 +715,76 @@ namespace ContractsOW
             }
         }
 
-        public void AcceptFriendRequest(string player, string friend)
+        public void AcceptFriendRequest(int id)
         {
-            bool isAccepted = true;
-            _context.FriendRequests.Where(p => p.nicknameFriend == player).ToList();
-            OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ConfirmRequestAnswered(isAccepted);
+            string state = "Acepted";
+            FriendRequest friendRequest = _context.FriendRequests.Where(p => p.idFriendRequest == id).Select(f => f).FirstOrDefault();
+            friendRequest.stateRequest = state;
+            _context.SaveChanges();
+            List<FriendContract> friendContract = GetRequest(friendRequest.nicknameFriend);
+            OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ConfirmRequestAnswered(friendContract);
         }
 
-        public void DenyFriendRequest(string player, string friend)
+        public void DenyFriendRequest(int id)
         {
-            bool isAccepted = false;
-            OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ConfirmRequestAnswered(isAccepted);
+            FriendRequest friendRequest = _context.FriendRequests.Where(p => p.idFriendRequest == id).Select(f => f).FirstOrDefault();
+            _context.FriendRequests.Remove(friendRequest);
+            _context.SaveChanges();
+            List<FriendContract> friendContract = GetRequest(friendRequest.nicknameFriend);
+            OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ConfirmRequestAnswered(friendContract);
+        }
+
+        public void ConsultProfile(string nickName)
+        {
+            PlayerContract player = _playerList.SingleOrDefault(u => u.nickName == nickName);
+            if (player != null)
+            {
+                OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ShowProfileData(player);
+            }
+        }
+
+        public void GetProfileImages()
+        {
+            List<PerfilImage> images = _context.PerfilImages.ToList();
+            List<ProfieImageContract> profileImagesContract = new List<ProfieImageContract>();
+            foreach(var image in images)
+            {
+                profileImagesContract.Add(new ProfieImageContract
+                {
+                    id = image.idImage,
+                    imageProfile = image.Image
+                });
+            }
+            OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ShowProfileImages(profileImagesContract);
+        }
+
+        public void UpdatePlayer(PlayerContract player)
+        {
+            Player playerUpdated = _context.Players.Where(p => p.nickName == player.nickName).Select(f => f).FirstOrDefault();
+            playerUpdated.state = player.state;
+            PlayerContract playerOnline = _playerList.SingleOrDefault(u => u.nickName == player.nickName);
+            playerOnline.state = player.state;
+            if (player.imageProfile != null)
+            {
+                playerUpdated.imageProfile = player.imageProfile;
+                playerOnline.imageProfile = player.imageProfile;
+            }
+            _context.SaveChanges();
+            OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ShowProfileData(player);
+        }
+
+        public void DisconnectFromUsersOnline(string player)
+        {
+            PlayerContract playercontract = _playerList.FirstOrDefault(p => p.nickName == player);
+            _playerList.Remove(playercontract);
+        }
+
+        public void GetOutGameWindow(string player)
+        {
+            PlayerContract playercontract = _playerInGame.FirstOrDefault(p => p.nickName == player);
+            _playerInGame.Remove(playercontract);
+            GetPlayers(playercontract);
+            OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().OpenMainWindow(playercontract);
         }
     }
 }

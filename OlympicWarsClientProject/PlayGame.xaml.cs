@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,10 +37,12 @@ namespace OlympicWarsClientProject
         private IPlayerService _playerDeckChannel;
         private int minute = 0;
         private int second = 0;
+        private int saveGame = 0;
         private string _turn;
         private CardContract _cardToMoveChoice = null;
         private CardContract _cardToMoveOnTable = null;
         private CardContract _cardToMoveOnPlay = null;
+        private Log log = new Log();
 
         public PlayGame()
         {
@@ -64,11 +67,24 @@ namespace OlympicWarsClientProject
             game.player2 = labelPlayerFriend.Content.ToString();
             game.statePlayer1 = "Undefined";
             game.statePlayer2 = "Undefined";
-            var service = new PlayerServiceCallback();
-            service.GetGameIdEvent += getGameId;
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.SaveGameData(game);
+            try
+            {
+                var service = new PlayerServiceCallback();
+                service.GetGameIdEvent += getGameId;
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.SaveGameData(game);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show("Database error");
+                log.Add(ex.ToString());
+            }
         }
 
         private void getGameId(int id)
@@ -76,26 +92,65 @@ namespace OlympicWarsClientProject
             _idGame = id;
         }
 
-        private void Second_tick(object sender, EventArgs e)
+        private void UpdateGameInfo(bool isGameOver, bool isWinner)
         {
-            second++;
-            if (second == 10)
+            GameContract game = new GameContract();
+            game.playerName = labelLocalPlayer.Content.ToString();
+            game.idGame = _idGame;
+            game.dateGame = DateTime.Now;
+            
+            game.duration = minute + " : " + second;
+            game.player1 = labelLocalPlayer.Content.ToString();
+            game.player2 = labelPlayerFriend.Content.ToString();
+            
+            if (isGameOver)
             {
-                GameContract game = new GameContract();
-                game.playerName = labelLocalPlayer.Content.ToString();
-                game.idGame = _idGame;
-                game.dateGame = DateTime.Now;
+                game.stateGame = "finished";
+                
+            }
+            else
+            {
                 game.stateGame = "Unfinished";
-                game.duration = minute + " : " + second;
-                game.player1 = labelLocalPlayer.Content.ToString();
-                game.player2 = labelPlayerFriend.Content.ToString();
-                game.statePlayer1 = "Undefined";
-                game.statePlayer2 = "Undefined";
+            }
+            if (isGameOver && isWinner)
+            {
+                game.statePlayer1 = "Winner";
+                game.statePlayer2 = "Loser";
+            }
+            else if (isGameOver && (!isWinner))
+            {
+                game.statePlayer1 = "Loser";
+                game.statePlayer2 = "Winner";
+            }
+            try
+            {
                 var service = new PlayerServiceCallback();
                 _serverDeckProxy = new ServerPlayerProxy(service);
                 _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
                 _playerDeckChannel.UpdateGameData(game);
             }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show("Database error");
+                log.Add(ex.ToString());
+            }
+        }
+
+        private void Second_tick(object sender, EventArgs e)
+        {
+            second++;
+            saveGame++;
+            if(saveGame == 5)
+            {
+                UpdateGameInfo(false, false);
+                saveGame = 0;
+            }
+            
             if (second > 59)
             {
                 minute++;
@@ -112,26 +167,39 @@ namespace OlympicWarsClientProject
             Guid oldId = player1.id;
             player1.id = Guid.NewGuid();
             _userId = player1.id;
-            var service = new PlayerServiceCallback();
-            service.ReceiveMessageEvent += ReceiveMessage;
-            service.DecksListUpdatedEvent += getListOfDecks;
-            service.ReceiveSelectedCardEvent += ReceiveSelectCard;
-            service.GetMyIdEvent += GetMyId;
-            service.ReceiveAttackEvent += ReceiveAttack;
-            service.ReceiveCardToAttacKEvent += ReceiveCardToAttack;
-            service.StartFirstTurnEvent += StartFirstTurn;
-            service.ReceiveAttackTurnEvent += ReceiveAttackTurn;
-            service.ReceiveDefendTurnEvent += ReceiveDefendTurn;
-            service.StartExecuteAttackEvent += StartExecuteAttack;
-            service.ReceiveChoiceCardTurnEvent += ReceiveChoiceCardTurn;
-            service.CleanCardsSurvivalEvent += CleanCardsSurvival;
-            service.ShowTotalDamageEvent += ShowTotalDamage;
-            service.ReceiveGameOverEvent += ReceiveGameOver;
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.chargeDecks(labelLocalPlayer.Content.ToString());
-            _playerDeckChannel.UpdateGuid(oldId, player1, player2.nickName);
-            startGameSave();
+            try
+            {
+                var service = new PlayerServiceCallback();
+                service.ReceiveMessageEvent += ReceiveMessage;
+                service.DecksListUpdatedEvent += getListOfDecks;
+                service.ReceiveSelectedCardEvent += ReceiveSelectCard;
+                service.GetMyIdEvent += GetMyId;
+                service.ReceiveAttackEvent += ReceiveAttack;
+                service.ReceiveCardToAttacKEvent += ReceiveCardToAttack;
+                service.StartFirstTurnEvent += StartFirstTurn;
+                service.ReceiveAttackTurnEvent += ReceiveAttackTurn;
+                service.ReceiveDefendTurnEvent += ReceiveDefendTurn;
+                service.StartExecuteAttackEvent += StartExecuteAttack;
+                service.ReceiveChoiceCardTurnEvent += ReceiveChoiceCardTurn;
+                service.CleanCardsSurvivalEvent += CleanCardsSurvival;
+                service.ShowTotalDamageEvent += ShowTotalDamage;
+                service.ReceiveGameOverEvent += ReceiveGameOver;
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.chargeDecks(labelLocalPlayer.Content.ToString());
+                _playerDeckChannel.UpdateGuid(oldId, player1, player2.nickName);
+                startGameSave();
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show("Database error");
+                log.Add(ex.ToString());
+            }
         }
 
         private void ConfirmTurn()
@@ -193,11 +261,19 @@ namespace OlympicWarsClientProject
 
         public void StartTurnsPlayer1(string player1)
         {
-            var service = new PlayerServiceCallback();
-            service.StartFirstTurnEvent += StartFirstTurn;
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.StartTurns(player1);
+            try
+            {
+                var service = new PlayerServiceCallback();
+                service.StartFirstTurnEvent += StartFirstTurn;
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.StartTurns(player1);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
 
         }
 
@@ -232,15 +308,28 @@ namespace OlympicWarsClientProject
             DeckContract deck = (DeckContract)listBoxDecks.SelectedItem;
             string cellvalue = deck.deckName;
             _deckName = deck.deckName;
-            var service = new PlayerServiceCallback();
-            service.CardListUpdatedEvent += LoadListOfCards;
-            service.ReceiveMessageEvent += ReceiveMessage;
-            service.ReceivCardOnTableEvent += ReceiveCardsOnTable;
-            
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.LoadCards(cellvalue);
-            gridChoiceDecksLocked.Visibility = Visibility.Hidden;
+            try
+            {
+                var service = new PlayerServiceCallback();
+                service.CardListUpdatedEvent += LoadListOfCards;
+                service.ReceiveMessageEvent += ReceiveMessage;
+                service.ReceivCardOnTableEvent += ReceiveCardsOnTable;
+
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.LoadCards(cellvalue);
+                gridChoiceDecksLocked.Visibility = Visibility.Hidden;
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show("Database error");
+                log.Add(ex.ToString());
+            }
         }
 
         private void ReceiveCardsOnTable(byte[] imageOnboard)
@@ -290,31 +379,47 @@ namespace OlympicWarsClientProject
 
         public void updateId()
         {
-            var service = new PlayerServiceCallback();
-            service.GetFriendIdEvent += GetFriendId;
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            string playerRecevier = labelPlayerFriend.Content.ToString();
-            _playerDeckChannel.UpdateIdFriend(playerRecevier);
+            try
+            {
+                var service = new PlayerServiceCallback();
+                service.GetFriendIdEvent += GetFriendId;
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                string playerRecevier = labelPlayerFriend.Content.ToString();
+                _playerDeckChannel.UpdateIdFriend(playerRecevier);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
         }
 
 
         public void SendTheMessage()
         {
-            var service = new PlayerServiceCallback();
-            service.ReceiveMessageEvent += ReceiveMessage;
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            string playerSender = labelLocalPlayer.Content.ToString();
-            string playerRecevier = labelPlayerFriend.Content.ToString();
-            PlayerContract playerHost = new PlayerContract();
-            playerHost.nickName = playerSender;
-            playerHost.id = _userId;
-            PlayerContract playerFriend = new PlayerContract();
-            playerFriend.nickName = playerRecevier;
-            playerFriend.id = _friendiId;
-            string message = textBoxChat.Text;
-            _playerDeckChannel.sendMessageInGame(playerHost, playerFriend, message);
+            try
+            {
+                var service = new PlayerServiceCallback();
+                service.ReceiveMessageEvent += ReceiveMessage;
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                string playerSender = labelLocalPlayer.Content.ToString();
+                string playerRecevier = labelPlayerFriend.Content.ToString();
+                PlayerContract playerHost = new PlayerContract();
+                playerHost.nickName = playerSender;
+                playerHost.id = _userId;
+                PlayerContract playerFriend = new PlayerContract();
+                playerFriend.nickName = playerRecevier;
+                playerFriend.id = _friendiId;
+                string message = textBoxChat.Text;
+                _playerDeckChannel.sendMessageInGame(playerHost, playerFriend, message);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
             textBoxChat.Text = "";
         }
         private void ReceiveMessage(string playerSender, string message)
@@ -331,11 +436,18 @@ namespace OlympicWarsClientProject
         private void SendCardsOnTableList()
         {
             List<CardContract> cardList = (List<CardContract>)listBoxCardsOnTable.ItemsSource;
-            
-            var service = new PlayerServiceCallback();
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.SendSelectCard(cardList, labelPlayerFriend.Content.ToString());
+            try
+            {
+                var service = new PlayerServiceCallback();
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.SendSelectCard(cardList, labelPlayerFriend.Content.ToString());
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
         }
 
 
@@ -463,53 +575,71 @@ namespace OlympicWarsClientProject
 
         private void listBoxChoiceCard_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            gridShowCardSelected.Visibility = Visibility.Visible;
-            CardContract card = (CardContract)listBoxChoiceCard.SelectedItem;
-            List<CardContract> cardList = new List<CardContract>();
-            cardList.Add(card);
-            _cardToMoveChoice = card;
-            listBoxCardToChoice.ItemsSource = cardList;
-            List<CardContract> cardListSource = (List<CardContract>)listBoxChoiceCard.ItemsSource;
-            cardListSource.Remove(card);
-            listBoxChoiceCard.ItemsSource = cardListSource;
-            listBoxChoiceCard.Items.Refresh();
-            
+            if (_cardToMoveChoice ==  null)
+            {
+                gridShowCardSelected.Visibility = Visibility.Visible;
+                CardContract card = (CardContract)listBoxChoiceCard.SelectedItem;
+                List<CardContract> cardList = new List<CardContract>();
+                cardList.Add(card);
+                _cardToMoveChoice = card;
+                listBoxCardToChoice.ItemsSource = cardList;
+                List<CardContract> cardListSource = (List<CardContract>)listBoxChoiceCard.ItemsSource;
+                cardListSource.Remove(card);
+                listBoxChoiceCard.ItemsSource = cardListSource;
+                listBoxChoiceCard.Items.Refresh();
+            }
         }
 
         private void ChangeTurnToChoiceCard()
         {
-            var service = new PlayerServiceCallback();
+            try
+            {
+                var service = new PlayerServiceCallback();
 
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            if (_turn == "Choice1") 
-            {
-                _playerDeckChannel.ChangeChoiceCardTurns(labelPlayerFriend.Content.ToString());
-                buttonAttackDefend.IsEnabled = false;
-                labelPass.Visibility = Visibility.Hidden;
-                gridCoverListBoxVhoiceCard.Visibility = Visibility.Visible;
-                gridCoverListBoxCardsOnTable.Visibility = Visibility.Visible;
-                gridCoverCardsOnPlay.Visibility = Visibility.Visible;
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                if (_turn == "Choice1")
+                {
+                    _playerDeckChannel.ChangeChoiceCardTurns(labelPlayerFriend.Content.ToString());
+                    buttonAttackDefend.IsEnabled = false;
+                    labelPass.Visibility = Visibility.Hidden;
+                    gridCoverListBoxVhoiceCard.Visibility = Visibility.Visible;
+                    gridCoverListBoxCardsOnTable.Visibility = Visibility.Visible;
+                    gridCoverCardsOnPlay.Visibility = Visibility.Visible;
+                }
+                else if (_turn == "Choice2")
+                {
+                    _playerDeckChannel.PassTurnToAttack(labelPlayerFriend.Content.ToString());
+                    buttonAttackDefend.IsEnabled = false;
+                    labelPass.Visibility = Visibility.Hidden;
+                    gridCoverListBoxVhoiceCard.Visibility = Visibility.Visible;
+                    gridCoverListBoxCardsOnTable.Visibility = Visibility.Visible;
+                    gridCoverCardsOnPlay.Visibility = Visibility.Visible;
+                }
             }
-            else if (_turn == "Choice2")
+            catch (EndpointNotFoundException ex)
             {
-                _playerDeckChannel.PassTurnToAttack(labelPlayerFriend.Content.ToString());
-                buttonAttackDefend.IsEnabled = false;
-                labelPass.Visibility = Visibility.Hidden;
-                gridCoverListBoxVhoiceCard.Visibility = Visibility.Visible;
-                gridCoverListBoxCardsOnTable.Visibility = Visibility.Visible;
-                gridCoverCardsOnPlay.Visibility = Visibility.Visible;
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
             }
         }
 
         private void SendCardsInPlay()
         {
             List<CardContract> cardList = (List<CardContract>)listBoxCardsOnPlay.ItemsSource;
-            var service = new PlayerServiceCallback();
+            try
+            {
+                var service = new PlayerServiceCallback();
 
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.SendCardToAttack(labelPlayerFriend.Content.ToString(), cardList);
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.SendCardToAttack(labelPlayerFriend.Content.ToString(), cardList);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
         }
 
         private void ReceiveCardToAttack(List<CardContract> cardList)
@@ -581,11 +711,18 @@ namespace OlympicWarsClientProject
 
         private void PassToDefend()
         {
-            var service = new PlayerServiceCallback();
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.PassTurnToDefend(labelPlayerFriend.Content.ToString());
-            
+            try
+            {
+                var service = new PlayerServiceCallback();
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.PassTurnToDefend(labelPlayerFriend.Content.ToString());
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
         }
 
         public void ReceiveDefendTurn(bool changeTurn)
@@ -625,10 +762,18 @@ namespace OlympicWarsClientProject
 
         private void SendExecuteAttack()
         {
-            var service = new PlayerServiceCallback();
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.ExecuteAttack(labelPlayerFriend.Content.ToString());
+            try
+            {
+                var service = new PlayerServiceCallback();
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.ExecuteAttack(labelPlayerFriend.Content.ToString());
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
         }
 
         private void StartExecuteAttack(bool startAttack)
@@ -643,13 +788,20 @@ namespace OlympicWarsClientProject
         {
             List<CardContract> cardList = new List<CardContract>();
             cardList = (List<CardContract>)listBoxCardsOnPlay.ItemsSource;
-            
-            var service = new PlayerServiceCallback();
+            try
+            {
+                var service = new PlayerServiceCallback();
 
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.SendAttack(labelPlayerFriend.Content.ToString(), cardList);
-            
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.SendAttack(labelPlayerFriend.Content.ToString(), cardList);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
+
         }
 
         private void ReceiveAttack(List<CardContract> cardsToAttack)
@@ -676,20 +828,41 @@ namespace OlympicWarsClientProject
 
         private void FinallyGame()
         {
-            var service = new PlayerServiceCallback();
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.SendGameOver(labelPlayerFriend.Content.ToString());
-            ReceiveGameOver(true);
+            try
+            {
+                var service = new PlayerServiceCallback();
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.SendGameOver(labelPlayerFriend.Content.ToString());
+                ReceiveGameOver(true);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show("Database error");
+                log.Add(ex.ToString());
+            }
         }
 
         private void SendTotalDamage(int damage)
         {
-            var service = new PlayerServiceCallback();
+            try
+            {
+                var service = new PlayerServiceCallback();
 
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.SendTotalDamageDealt(labelPlayerFriend.Content.ToString(), damage);
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.SendTotalDamageDealt(labelPlayerFriend.Content.ToString(), damage);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
         }
 
         private void ShowTotalDamage(int damage)
@@ -768,11 +941,19 @@ namespace OlympicWarsClientProject
 
         private void ReturnCardListWithLive(List<CardContract> cardListAttack)
         {
-            var service = new PlayerServiceCallback();
-            
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.SendSurvivalCards(labelPlayerFriend.Content.ToString(), cardListAttack);
+            try
+            {
+                var service = new PlayerServiceCallback();
+
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.SendSurvivalCards(labelPlayerFriend.Content.ToString(), cardListAttack);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
         }
 
         private void CleanCardsSurvival(List<CardContract> cardsSurvival)
@@ -805,11 +986,24 @@ namespace OlympicWarsClientProject
 
         private void GetNewCard()
         {
-            var service = new PlayerServiceCallback();
-            service.GetCardToNewTurnEvent += GetCardToNewTurn;
-            _serverDeckProxy = new ServerPlayerProxy(service);
-            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
-            _playerDeckChannel.AddCardInNewTurn(_deckName);
+            try
+            {
+                var service = new PlayerServiceCallback();
+                service.GetCardToNewTurnEvent += GetCardToNewTurn;
+                _serverDeckProxy = new ServerPlayerProxy(service);
+                _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+                _playerDeckChannel.AddCardInNewTurn(_deckName);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show("Database error");
+                log.Add(ex.ToString());
+            }
         }
 
         private void GetCardToNewTurn(CardContract card)
@@ -849,6 +1043,37 @@ namespace OlympicWarsClientProject
             {
                 gridGameOver.Visibility = Visibility.Visible;
             }
+            UpdateGameInfo(isGameOver, isWinner);
+        }
+
+
+        private void CloseWindowWhenEndTheGame()
+        {
+            var service = new PlayerServiceCallback();
+            service.OpenMainWindowEvent += OpenMainWindow;
+            _serverDeckProxy = new ServerPlayerProxy(service);
+            _playerDeckChannel = _serverDeckProxy.ChannelFactory.CreateChannel();
+            _playerDeckChannel.GetOutGameWindow(labelLocalPlayer.Content.ToString());
+        }
+
+        public void OpenMainWindow(PlayerContract player)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.LoadData(player);
+            mainWindow.GetName(labelLocalPlayer.Content.ToString());
+            mainWindow.ReceiveRequest();
+            this.Close();
+            mainWindow.Show();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            CloseWindowWhenEndTheGame();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            CloseWindowWhenEndTheGame();
         }
     }
 }

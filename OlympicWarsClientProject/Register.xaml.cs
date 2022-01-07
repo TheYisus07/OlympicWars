@@ -16,6 +16,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.ServiceModel;
 
 namespace OlympicWarsClientProject
 {
@@ -24,9 +25,9 @@ namespace OlympicWarsClientProject
     /// </summary>
     public partial class Register : Window
     {
-        private OlympicWarsContext _context = new OlympicWarsContext();
         private ServerPlayerProxy _serverPlayerProxy;
         private IPlayerService _playerServiceChannel;
+        private Log log = new Log();
 
         public Register()
         {
@@ -36,12 +37,12 @@ namespace OlympicWarsClientProject
         private void Button_RegisterUser(object sender, RoutedEventArgs e)
         {
             //errors.Clear();
-            Player player = new Player();
+            PlayerContract player = new PlayerContract();
             string passwordEncrypt = EncryptPassword.SHA256(passwordBoxPassword.Password);
 
             player.nickName = textBoxNickname.Text;
             player.password = passwordEncrypt;
-            player.Email = textBoxEmail.Text;
+            player.email = textBoxEmail.Text;
 
             Validator validator = new Validator();
             FluentValidation.Results.ValidationResult results = validator.Validate(player);
@@ -72,23 +73,36 @@ namespace OlympicWarsClientProject
 
         private void Button_Ok_Click(object sender, RoutedEventArgs e)
         {
-            Player player = new Player();
-
-            string passwordEncrypt = EncryptPassword.SHA256(passwordBoxPassword.Password);
-            string codeConfirm = textBoxCodeCofirmation.Text;
-            player.nickName = textBoxNickname.Text;
-            player.password = passwordEncrypt;
-            player.Email = textBoxEmail.Text;
-
-            if (codeConfirm == textBoxCodeCofirmation.Text)
+            try
             {
-                var playerCallback = new PlayerServiceCallback();
-                playerCallback.ConfirmRegistrationEvent += ConfirmRegistration;
-                _serverPlayerProxy = new ServerPlayerProxy(playerCallback);
-                _playerServiceChannel = _serverPlayerProxy.ChannelFactory.CreateChannel();
-                _playerServiceChannel.RegisterUser(player);
-                textBoxCodeCofirmation.Text = "";
-                gridInputBox.Visibility = Visibility.Collapsed;
+                PlayerContract player = new PlayerContract();
+
+                string passwordEncrypt = EncryptPassword.SHA256(passwordBoxPassword.Password);
+                string codeConfirm = textBoxCodeCofirmation.Text;
+                player.nickName = textBoxNickname.Text;
+                player.password = passwordEncrypt;
+                player.email = textBoxEmail.Text;
+
+                if (codeConfirm == textBoxCodeCofirmation.Text)
+                {
+                    var playerCallback = new PlayerServiceCallback();
+                    playerCallback.ConfirmRegistrationEvent += ConfirmRegistration;
+                    _serverPlayerProxy = new ServerPlayerProxy(playerCallback);
+                    _playerServiceChannel = _serverPlayerProxy.ChannelFactory.CreateChannel();
+                    _playerServiceChannel.RegisterUser(player);
+                    textBoxCodeCofirmation.Text = "";
+                    gridInputBox.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                MessageBox.Show("Error");
+                log.Add(ex.ToString());
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show("Database error");
+                log.Add(ex.ToString());
             }
         }
 
@@ -118,7 +132,7 @@ namespace OlympicWarsClientProject
         {
             try
             {
-                Player playerLogin = new Player();
+                PlayerContract playerLogin = new PlayerContract();
 
                 playerLogin.nickName = textBoxNicknameLogin.Text;
                 playerLogin.password = EncryptPassword.SHA256(passwordBoxPasswordLogin.Password);
@@ -135,12 +149,24 @@ namespace OlympicWarsClientProject
                 }
                 else if (EncryptPassword.SHA256(passwordBoxPasswordLogin.Password) == playerLogin.password)
                 {
-                    var playerCallback = new PlayerServiceCallback();
-                    playerCallback.ConfirmLoginEvent += ConfirmLogin;
-                    _serverPlayerProxy = new ServerPlayerProxy(playerCallback);
-                    _playerServiceChannel = _serverPlayerProxy.ChannelFactory.CreateChannel();
-                    _playerServiceChannel.LoginUser(playerLogin);
-                    //new MainWindow().ShowDialog();
+                    try
+                    {
+                        var playerCallback = new PlayerServiceCallback();
+                        playerCallback.ConfirmLoginEvent += ConfirmLogin;
+                        _serverPlayerProxy = new ServerPlayerProxy(playerCallback);
+                        _playerServiceChannel = _serverPlayerProxy.ChannelFactory.CreateChannel();
+                        _playerServiceChannel.LoginUser(playerLogin);
+                    }
+                    catch (EndpointNotFoundException ex)
+                    {
+                        MessageBox.Show("Error");
+                        log.Add(ex.ToString());
+                    }
+                    catch (System.Data.Entity.Core.EntityException ex)
+                    {
+                        MessageBox.Show("Database error");
+                        log.Add(ex.ToString());
+                    }
                 }
                 else
                 {
@@ -151,6 +177,7 @@ namespace OlympicWarsClientProject
             {
                 MessageBox.Show("User can't find");
             }     
+
         }
 
         private void ConfirmLogin(PlayerContract player, bool confirmLogin)
@@ -161,7 +188,7 @@ namespace OlympicWarsClientProject
                 mainWindow.LoadData(player);
                 mainWindow.GetName(textBoxNicknameLogin.Text);
                 mainWindow.ReceiveRequest();
-                this.Hide();
+                this.Close();
                 mainWindow.Show();
             }
             else

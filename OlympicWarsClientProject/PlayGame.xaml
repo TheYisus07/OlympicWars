@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OlympicWarsClientProject"
         mc:Ignorable="d"
+        xmlns:language="clr-namespace:OlympicWarsClientProject.Properties.Langs"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         FontFamily="{DynamicResource MaterialDesignFont}"
@@ -195,7 +196,7 @@
             Style="{StaticResource MaterialDesignFilledTextBox}"
             VerticalAlignment="Top"
             MaxWidth="400"
-            materialDesign:HintAssist.Hint="Send a message" Margin="0,349,823,0" RenderTransformOrigin="0.5,0.5" Background="#A51D1D1D" Foreground="#DDFFFFFF" FontSize="12" Height="42" >
+            materialDesign:HintAssist.Hint="{x:Static language:Lang.sendMessage}" Margin="0,349,823,0" RenderTransformOrigin="0.5,0.5" Background="#A51D1D1D" Foreground="#DDFFFFFF" FontSize="12" Height="42" >
             <TextBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -455,7 +456,7 @@
                 </LinearGradientBrush>
             </Grid.Background>
             <Image HorizontalAlignment="Left" Height="470" Margin="366,28,0,0" VerticalAlignment="Top" Width="330" Source="Resources/GameOver.png"/>
-            <Button Content="Accept" HorizontalAlignment="Left" Margin="463,465,0,0" VerticalAlignment="Top" Width="114" Height="33" FontFamily="Kristen ITC" FontSize="20">
+            <Button Content="Accept" HorizontalAlignment="Left" Margin="463,465,0,0" VerticalAlignment="Top" Width="114" Height="33" FontFamily="Kristen ITC" FontSize="20" Click="Button_Click_3">
                 <Button.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <LinearGradientBrush.RelativeTransform>
@@ -506,7 +507,7 @@
                 </LinearGradientBrush>
             </Grid.Background>
             <Image HorizontalAlignment="Left" Height="541" Margin="332,0,0,0" VerticalAlignment="Top" Width="393" Source="Resources/Winner.png"/>
-            <Button Content="Accept" HorizontalAlignment="Left" Margin="471,473,0,0" VerticalAlignment="Top" Width="114" Height="33" FontFamily="Kristen ITC" FontSize="20">
+            <Button Content="Accept" HorizontalAlignment="Left" Margin="471,473,0,0" VerticalAlignment="Top" Width="114" Height="33" FontFamily="Kristen ITC" FontSize="20" Click="Button_Click_2">
                 <Button.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <LinearGradientBrush.RelativeTransform>

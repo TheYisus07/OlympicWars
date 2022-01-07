@@ -158,5 +158,14 @@ namespace OlympicWarsClientProject.Properties.Langs {
                 return ResourceManager.GetString("save", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Message.
+        /// </summary>
+        public static string sendMessage {
+            get {
+                return ResourceManager.GetString("sendMessage", resourceCulture);
+            }
+        }
     }
 }

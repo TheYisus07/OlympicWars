@@ -129,8 +129,20 @@ namespace OlympicWarsClientProject
         //public delegate void ReceiveConfirmationDelegate(string playerconfirmation);
         //public event ReceiveConfirmationDelegate ReceiveConfirmationEvent;
 
-        public delegate void ConfirmRequestAnsweredDelegate(bool isAccepted);
+        public delegate void ConfirmRequestAnsweredDelegate(List<FriendContract> friendContract);
         public event ConfirmRequestAnsweredDelegate ConfirmRequestAnsweredEvent;
+
+        public delegate void ChargeListOfFriendsDelegate(List<PlayerContract> playerContract);
+        public event ChargeListOfFriendsDelegate ChargeListOfFriendsEvent;
+
+        public delegate void ShowProfileDataDelegate(PlayerContract playerContract);
+        public event ShowProfileDataDelegate ShowProfileDataEvent;
+
+        public delegate void ShowProfileImagesDelegate(List<ProfieImageContract> profieImageContract);
+        public event ShowProfileImagesDelegate ShowProfileImagesEvent;
+
+        public delegate void OpenMainWindowDelegate(PlayerContract playerContract);
+        public event OpenMainWindowDelegate OpenMainWindowEvent;
 
         public void getListOfDecks(List<DeckContract> decks)
         {
@@ -326,9 +338,29 @@ namespace OlympicWarsClientProject
             ReceiveInvitationEvent(invitationName, friend);
         }
 
-        public void ConfirmRequestAnswered(bool isAccepted)
+        public void ConfirmRequestAnswered(List<FriendContract> friendContract)
         {
-            ConfirmRequestAnsweredEvent(isAccepted);
+            ConfirmRequestAnsweredEvent(friendContract);
+        }
+
+        public void ChargeListOfFriends(List<PlayerContract> playerContracts)
+        {
+            ChargeListOfFriendsEvent(playerContracts);
+        }
+
+        public void ShowProfileData(PlayerContract playerContract)
+        {
+            ShowProfileDataEvent(playerContract);
+        }
+
+        public void ShowProfileImages(List<ProfieImageContract> profieImageContract)
+        {
+            ShowProfileImagesEvent(profieImageContract);
+        }
+
+        public void OpenMainWindow(PlayerContract player)
+        {
+            OpenMainWindowEvent(player);
         }
 
         //public void ReceiveConfirmation(string playerConfirmation)

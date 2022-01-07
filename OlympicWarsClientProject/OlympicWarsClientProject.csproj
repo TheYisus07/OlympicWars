@@ -79,6 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Log.cs" />
     <Compile Include="Properties\Langs\Lang.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,24 +93,12 @@
     <Compile Include="Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SendGameInvitation.xaml.cs">
-      <DependentUpon>SendGameInvitation.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Validations\Validator.cs" />
     <Compile Include="Validations\ValidatorLogin.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeckWindow.xaml.cs">
-      <DependentUpon>DeckWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="History.xaml.cs">
-      <DependentUpon>History.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Language.xaml.cs">
       <DependentUpon>Language.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="LanguageWindow.xaml.cs">
-      <DependentUpon>LanguageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -152,21 +141,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Page Include="DeckWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="History.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Language.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="LanguageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -179,10 +155,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Register.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SendGameInvitation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -212,6 +184,7 @@
     <Resource Include="Resources\board.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\book.png" />
     <Resource Include="Resources\cardReverse.png.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +274,9 @@
       <Project>{6467c05c-8738-47e6-866c-eeb9ad76e31f}</Project>
       <Name>Server</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -28,8 +28,34 @@
                 <TextBlock HorizontalAlignment="Left" Margin="24,134,0,0" TextWrapping="Wrap" Text="State:" VerticalAlignment="Top" Foreground="White" FontSize="30" Width="74" Height="42"/>
                 <TextBlock x:Name="textBlockState" HorizontalAlignment="Left" Margin="22,178,0,0" TextWrapping="Wrap" Text="Text" VerticalAlignment="Top" Foreground="White" FontSize="25" Width="342" Height="42"/>
                 <Button x:Name="buttonModify" Margin="550,16,17,444" Content="Modify" Opacity="1" Click="Button_Modify_Click"/>
-                <Button  x:Name="buttonSaveProfile" Margin="550,55,17,405" Content="Save" Opacity="1" Visibility="Hidden"/>
-                <Image x:Name="imageProfile" HorizontalAlignment="Left" Height="250" Margin="380,32,0,0" VerticalAlignment="Top" Width="250"/>
+                
+                <Image x:Name="imageProfile" HorizontalAlignment="Left" Height="250" Margin="378,55,0,0" VerticalAlignment="Top" Width="250"/>
+            </Grid>
+        </Border>
+        <Border x:Name="borderModifyProfile" Margin="336,33,0,0" Opacity="0.9" Background="Black" CornerRadius="10" Visibility="Hidden">
+            <Grid>
+                <Button x:Name="buttonSaveChangesPerfil" Content="Save Changes" Margin="524,28,22,476" Click="buttonSaveChangesPerfil_Click"/>
+                <Button x:Name="buttonCancelUpdate" Content="Cancel" Margin="524,86,22,418" Click="buttonCancelUpdate_Click"/>
+                <Label Content="State:" Margin="10,28,596,465" Foreground="#DDFFFFFF" FontSize="20"/>
+                <Image x:Name="imageModifyPerfil" Margin="298,10,252,418"/>
+                <Border BorderBrush="White" CornerRadius="10" Margin="10,71,466,433" Height="32" Background="Black" BorderThickness="1">
+                    <TextBox x:Name="textBoxState" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Foreground="White" FontSize="16" Margin="0,0,-1,0" Width="191" />
+                </Border>
+                <Image Margin="10,123,10,10" Source="Resources/book.png"/>
+                <ListBox x:Name="listBoxImagesPerfil" ScrollViewer.VerticalScrollBarVisibility="Visible" Cursor="Hand" ItemsSource="{Binding}" Margin="78,145,85,58" SelectionChanged="listBoxImagesPerfil_SelectionChanged">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="4" VerticalAlignment="Top"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Image Source="{Binding imageProfile}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
         </Border>
         <Border CornerRadius="10" BorderBrush="#FFAD00EE" Margin="793,0,0,536">
@@ -97,7 +123,7 @@
             <Label x:Name="labelNotifications" FontWeight="Bold" Foreground="White"/>
         </Border>
 
-        <ListBox x:Name="listBoxInvitations" ScrollViewer.VerticalScrollBarVisibility="Visible" Cursor="Hand" ItemsSource="{Binding}" Height="229" Margin="10,288,674,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="320">
+        <ListBox x:Name="listBoxInvitations" ScrollViewer.VerticalScrollBarVisibility="Visible" Cursor="Hand" ItemsSource="{Binding}" Height="229" Margin="10,288,707,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="287">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1" HorizontalAlignment="Center" VerticalAlignment="Top"/>

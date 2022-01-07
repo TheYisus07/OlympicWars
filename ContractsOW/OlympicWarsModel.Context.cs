@@ -32,5 +32,6 @@ namespace ContractsOW
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<PlayerGame> PlayerGames { get; set; }
         public virtual DbSet<FriendRequest> FriendRequests { get; set; }
+        public virtual DbSet<PerfilImage> PerfilImages { get; set; }
     }
 }

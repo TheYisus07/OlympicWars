@@ -186,6 +186,7 @@
       <End Role="Player" EntitySet="Players" />
       <End Role="FriendRequest" EntitySet="FriendRequests" />
     </AssociationSet>
+    <EntitySet Name="PerfilImages" EntityType="OlympicWarsModel.PerfilImage" />
   </EntityContainer>
   <EntityType Name="FriendRequest">
     <Key>
@@ -211,4 +212,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="PerfilImage">
+    <Key>
+      <PropertyRef Name="idImage" />
+    </Key>
+    <Property Name="idImage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Image" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+  </EntityType>
 </Schema>

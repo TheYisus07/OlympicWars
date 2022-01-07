@@ -45,6 +45,13 @@
     <Property Name="stateGame" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="playerName" Type="varchar" MaxLength="150" Nullable="false" />
   </EntityType>
+  <EntityType Name="PerfilImage">
+    <Key>
+      <PropertyRef Name="idImage" />
+    </Key>
+    <Property Name="idImage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Image" Type="image" Nullable="false" />
+  </EntityType>
   <EntityType Name="Player">
     <Key>
       <PropertyRef Name="nickName" />
@@ -126,6 +133,7 @@
     <EntitySet Name="Deck" EntityType="Self.Deck" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FriendRequest" EntityType="Self.FriendRequest" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PerfilImage" EntityType="Self.PerfilImage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PlayerGame" EntityType="Self.PlayerGame" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="PK_dbo_CollectedCard_dbo_Card" Association="Self.PK_dbo_CollectedCard_dbo_Card">

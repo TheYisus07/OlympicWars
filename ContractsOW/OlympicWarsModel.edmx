@@ -50,6 +50,13 @@
           <Property Name="stateGame" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="playerName" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
+        <EntityType Name="PerfilImage">
+          <Key>
+            <PropertyRef Name="idImage" />
+          </Key>
+          <Property Name="idImage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="image" Nullable="false" />
+        </EntityType>
         <EntityType Name="Player">
           <Key>
             <PropertyRef Name="nickName" />
@@ -131,6 +138,7 @@
           <EntitySet Name="Deck" EntityType="Self.Deck" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FriendRequest" EntityType="Self.FriendRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PerfilImage" EntityType="Self.PerfilImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerGame" EntityType="Self.PlayerGame" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="PK_dbo_CollectedCard_dbo_Card" Association="Self.PK_dbo_CollectedCard_dbo_Card">
@@ -340,6 +348,7 @@
             <End Role="Player" EntitySet="Players" />
             <End Role="FriendRequest" EntitySet="FriendRequests" />
           </AssociationSet>
+          <EntitySet Name="PerfilImages" EntityType="OlympicWarsModel.PerfilImage" />
         </EntityContainer>
         <EntityType Name="FriendRequest">
           <Key>
@@ -365,6 +374,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PerfilImage">
+          <Key>
+            <PropertyRef Name="idImage" />
+          </Key>
+          <Property Name="idImage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -439,6 +455,14 @@
                 <ScalarProperty Name="nicknameFriend" ColumnName="nicknameFriend" />
                 <ScalarProperty Name="nicknamePlayer" ColumnName="nicknamePlayer" />
                 <ScalarProperty Name="idFriendRequest" ColumnName="idFriendRequest" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PerfilImages">
+            <EntityTypeMapping TypeName="OlympicWarsModel.PerfilImage">
+              <MappingFragment StoreEntitySet="PerfilImage">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="idImage" ColumnName="idImage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

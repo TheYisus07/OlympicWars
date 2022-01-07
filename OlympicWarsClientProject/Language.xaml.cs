@@ -27,6 +27,7 @@ namespace OlympicWarsClientProject
         private void Button_OpenLogin(object sender, RoutedEventArgs e)
         {
             new Register().ShowDialog();
+            this.Close();
         }
 
         private void ComboBox_ChooseLanguage(object sender, SelectionChangedEventArgs e)

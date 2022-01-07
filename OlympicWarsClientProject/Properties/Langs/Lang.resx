@@ -150,4 +150,7 @@
   <data name="save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="sendMessage" xml:space="preserve">
+    <value>Send Message</value>
+  </data>
 </root>

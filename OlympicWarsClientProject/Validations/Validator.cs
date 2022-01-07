@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace OlympicWarsClientProject.Validations
 {
-    public class Validator : AbstractValidator<Player>
+    public class Validator : AbstractValidator<PlayerContract>
     {
         public Validator()
         {
@@ -23,7 +23,7 @@ namespace OlympicWarsClientProject.Validations
                 .NotEmpty().WithMessage("Empty password field")
                 .Length(5, 250).WithMessage("Password between 5 and 50 characters");
 
-            RuleFor(x => x.Email)
+            RuleFor(x => x.email)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage("Empty email field")
                 .EmailAddress().WithMessage("It is not an email");

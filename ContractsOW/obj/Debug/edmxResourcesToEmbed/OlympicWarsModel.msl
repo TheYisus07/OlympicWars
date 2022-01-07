@@ -72,5 +72,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PerfilImages">
+      <EntityTypeMapping TypeName="OlympicWarsModel.PerfilImage">
+        <MappingFragment StoreEntitySet="PerfilImage">
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="idImage" ColumnName="idImage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

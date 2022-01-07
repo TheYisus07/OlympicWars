@@ -112,10 +112,10 @@ namespace ContractsOW
 
 
         [OperationContract(IsOneWay = true)]
-        void RegisterUser(Player player);
+        void RegisterUser(PlayerContract player);
 
         [OperationContract(IsOneWay = true)]
-        void LoginUser(Player player);
+        void LoginUser(PlayerContract player);
 
         [OperationContract(IsOneWay = true)]
         void GetPlayers(PlayerContract userLogin);
@@ -136,10 +136,28 @@ namespace ContractsOW
         void AceptInvitation(string playerAcepted, string playerHost);
 
         [OperationContract(IsOneWay = true)]
-        void AcceptFriendRequest(string player, string friend);
+        void AcceptFriendRequest(int id);
 
         [OperationContract(IsOneWay = true)]
-        void DenyFriendRequest(string player, string friend);
+        void DenyFriendRequest(int id);
+
+        [OperationContract(IsOneWay = true)]
+        void GetPlayerList(PlayerContract playerContract);
+
+        [OperationContract(IsOneWay = true)]
+        void ConsultProfile(string nickName);
+
+        [OperationContract(IsOneWay = true)]
+        void GetProfileImages();
+
+        [OperationContract(IsOneWay = true)]
+        void UpdatePlayer(PlayerContract player);
+
+        [OperationContract(IsOneWay = true)]
+        void DisconnectFromUsersOnline(string player);
+
+        [OperationContract(IsOneWay = true)]
+        void GetOutGameWindow(string player);
 
     }
 
@@ -273,6 +291,18 @@ namespace ContractsOW
         //void ReceiveConfirmation(string playerConfirmation);
 
         [OperationContract(IsOneWay = true)]
-        void ConfirmRequestAnswered(bool isAccepted);
+        void ConfirmRequestAnswered(List<FriendContract> friendContract);
+
+        [OperationContract(IsOneWay = true)]
+        void ChargeListOfFriends(List<PlayerContract> playerContracts);
+
+        [OperationContract(IsOneWay = true)]
+        void ShowProfileData(PlayerContract playerContract);
+
+        [OperationContract(IsOneWay = true)]
+        void ShowProfileImages(List<ProfieImageContract> profieImageContract);
+
+        [OperationContract(IsOneWay = true)]
+        void OpenMainWindow(PlayerContract player);
     }
 }
