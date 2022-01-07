@@ -136,7 +136,6 @@ namespace ContractsOW
                 if (_playerList != null)
                 {
                     player.CallbackChannel.LoadFriendList(_playerList);
-                    //Console.WriteLine(player.nickName);
                 }
                 
             }
@@ -321,11 +320,8 @@ namespace ContractsOW
         {
             //var playerContractSender = _playerList.Single(p => p.id == playerSender.id);
             var playerContractRecevicer = _playerList.FirstOrDefault(p => p.nickName == playerReceiver.nickName);
-            Console.WriteLine(playerReceiver.id);
-            Console.WriteLine(playerContractRecevicer.id);
             if (playerContractRecevicer != null)
             {
-                Console.WriteLine(playerContractRecevicer.CallbackChannel.ToString());
                 playerContractRecevicer.CallbackChannel.ReceiveMessage(playerSender.nickName, message);
                 OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ReceiveMessage(playerSender.nickName, message);
             }
@@ -543,8 +539,12 @@ namespace ContractsOW
         public void GetPlayers(PlayerContract playerLogin)
         {
             playerLogin.CallbackChannel = OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>();
-            _playerList.Add(playerLogin);
-
+            PlayerContract playerOnline = _playerList.FirstOrDefault(p => p.nickName == playerLogin.nickName);
+            if (!_playerList.Contains(playerOnline))
+            {
+                _playerList.Add(playerLogin);
+                
+            }
             
             foreach (var player in _playerList)
             {
@@ -588,7 +588,6 @@ namespace ContractsOW
             {
                 if (_playerList != null)
                 {
-                    Console.WriteLine("4");
                     OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().ChargeListOfFriends(friendContract);
                 }
             }
@@ -631,6 +630,10 @@ namespace ContractsOW
                 if (frindRequestsList[i].nicknamePlayer != playerSend)
                 {
                     canSend = true;
+                }
+                if(frindRequestsList[i].stateRequest == "sent")
+                {
+                    canSend = false;
                 }
             }
 
@@ -781,9 +784,7 @@ namespace ContractsOW
 
         public void GetOutGameWindow(string player)
         {
-            PlayerContract playercontract = _playerInGame.FirstOrDefault(p => p.nickName == player);
-            _playerInGame.Remove(playercontract);
-            GetPlayers(playercontract);
+            PlayerContract playercontract = _playerList.FirstOrDefault(p => p.nickName == player);
             OperationContext.Current.GetCallbackChannel<IPlayerServiceCallback>().OpenMainWindow(playercontract);
         }
     }

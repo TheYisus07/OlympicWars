@@ -30,12 +30,6 @@ namespace OlympicWarsClientProject
         public delegate void DeckUpdatedDelegate(int numberEntrie);
         public event DeckUpdatedDelegate DeckUpdatedEvent;
 
-        //public delegate void ReceiveInvitationDelegate(string nameInvitation, PlayerContract friend);
-        //public event ReceiveInvitationDelegate ReceiveInvitationEvent;
-
-        //public delegate void LoadFriendListDelegate(List<PlayerContract> playerList);
-        //public event LoadFriendListDelegate LoadFriendListEvent;
-
         public delegate void ReceiveConfirmactionDelegate(string playerconfirmation);
         public event ReceiveConfirmactionDelegate ReceiveConfirmationEvent;
 
@@ -101,9 +95,6 @@ namespace OlympicWarsClientProject
 
 
 
-        //------------------------------------------------------------------------
-
-
 
         public delegate void ConfirmRegistrationDelegate(int confirmPlayer);
         public event ConfirmRegistrationDelegate ConfirmRegistrationEvent;
@@ -126,8 +117,6 @@ namespace OlympicWarsClientProject
         public delegate void ReceiveInvitationDelegate(string nameInvitation, PlayerContract friend);
         public event ReceiveInvitationDelegate ReceiveInvitationEvent;
 
-        //public delegate void ReceiveConfirmationDelegate(string playerconfirmation);
-        //public event ReceiveConfirmationDelegate ReceiveConfirmationEvent;
 
         public delegate void ConfirmRequestAnsweredDelegate(List<FriendContract> friendContract);
         public event ConfirmRequestAnsweredDelegate ConfirmRequestAnsweredEvent;
@@ -146,82 +135,115 @@ namespace OlympicWarsClientProject
 
         public void getListOfDecks(List<DeckContract> decks)
         {
-            DecksListUpdatedEvent(decks);
+            if (DecksListUpdatedEvent != null)
+            {
+                DecksListUpdatedEvent(decks);
+            }
         }
 
         public void OpenWindow(bool access, string player)
         {
-            PlayersListUpdatedEvent(access, player);
+            if (PlayersListUpdatedEvent != null)
+            {
+                PlayersListUpdatedEvent(access, player);
+            }
         }
 
         public void LoadListOfCards(List<CardContract> cardContractList)
         {
-            CardListUpdatedEvent(cardContractList);
+            if (CardListUpdatedEvent != null)
+            {
+                CardListUpdatedEvent(cardContractList);
+            }
         }
 
         public void LoadListOfAllCards(List<CardContract> cardContractList)
         {
-            CardListGotEvent(cardContractList);
+            if (CardListGotEvent != null)
+            {
+                CardListGotEvent(cardContractList);
+            }
         }
 
         public void ConfirmDeckSaved(int numberEntries)
         {
-            DeckSavedEvent(numberEntries);
+            if (DeckSavedEvent != null)
+            {
+                DeckSavedEvent(numberEntries);
+            }
         }
 
         public void LoadCardsToModify(List<CardContract> cardList)
         {
-            CardListFiltredToUpdateEvent(cardList);
+            if (CardListFiltredToUpdateEvent != null)
+            {
+                CardListFiltredToUpdateEvent(cardList);
+            }
         }
 
         public void ConfirmDeckUpdated(int numerEntries)
         {
-            DeckUpdatedEvent(numerEntries);
+            if (DeckUpdatedEvent != null)
+            {
+                DeckUpdatedEvent(numerEntries);
+            }
         }
 
-        //public void ReceiveInvitation(string invitationName, PlayerContract friend)
-        //{
-        //    ReceiveInvitationEvent(invitationName, friend);
-        //}
-
-        //public void LoadFriendList(List<PlayerContract> playerList)
-        //{
-        //    LoadFriendListEvent(playerList);
-        //}
 
         public void receiveConfirmation(string playerConfirmation)
         {
-            ReceiveConfirmationEvent(playerConfirmation);
+            if (ReceiveConfirmationEvent != null)
+            {
+                ReceiveConfirmationEvent(playerConfirmation);
+            }
         }
 
         public void LoadGame(PlayerContract playe1, PlayerContract player2)
         {
-            LoadGameEvent(playe1, player2);
+            if (LoadGameEvent != null)
+            {
+                LoadGameEvent(playe1, player2);
+            }
         }
 
         public void ReceiveMessage(string playerSender, string message)
         {
-            ReceiveMessageEvent(playerSender, message);
+            if (ReceiveMessageEvent != null)
+            {
+                ReceiveMessageEvent(playerSender, message);
+            }
         }
 
         public void GetFriendId(PlayerContract player)
         {
-            GetFriendIdEvent(player);
+            if (GetFriendIdEvent != null)
+            {
+                GetFriendIdEvent(player);
+            }
         }
 
         public void GetMyId(Guid id)
         {
-            GetMyIdEvent(id);
+            if (GetMyIdEvent != null)
+            {
+                GetMyIdEvent(id);
+            }
         }
 
         public void ReceiveCardsOnTable(byte[] imageOnboard)
         {
-            ReceivCardOnTableEvent(imageOnboard);
+            if (ReceivCardOnTableEvent != null)
+            {
+                ReceivCardOnTableEvent(imageOnboard);
+            }
         }
 
         public void loadGameHistory(List<GameContract> gameHistory)
         {
-            LoadGameHistoryEvent(gameHistory);
+            if (LoadGameHistoryEvent != null)
+            {
+                LoadGameHistoryEvent(gameHistory);
+            }
         }
 
         public void updateTime()
@@ -231,142 +253,215 @@ namespace OlympicWarsClientProject
 
         public void getGameId(int id)
         {
-            GetGameIdEvent(id);
+            if (GetGameIdEvent != null)
+            {
+                GetGameIdEvent(id);
+            }
         }
 
         public void ReceiveSelectCard(List<CardContract> cardList)
         {
-            ReceiveSelectedCardEvent(cardList);
+            if (ReceiveSelectedCardEvent != null)
+            {
+                ReceiveSelectedCardEvent(cardList);
+            }
         }
 
         public void ReceiveAttack(List<CardContract> cardsToAttack)
         {
-            ReceiveAttackEvent(cardsToAttack);
+            if (ReceiveAttackEvent != null)
+            {
+                ReceiveAttackEvent(cardsToAttack);
+            }
         }
 
         public void ReceiveCardToAttack(List<CardContract> cardList)
         {
-            ReceiveCardToAttacKEvent(cardList);
+            if (ReceiveCardToAttacKEvent != null)
+            {
+                ReceiveCardToAttacKEvent(cardList);
+            }
         }
 
         public void StartFirstTurn(bool startAttack)
         {
-            StartFirstTurnEvent(startAttack);
+            if (StartFirstTurnEvent != null)
+            {
+                StartFirstTurnEvent(startAttack);
+            }
         }
 
         public void StartTurn(bool startAttack, string player1)
         {
-            StartTurnEvent(startAttack, player1);
+            if (StartTurnEvent != null)
+            {
+                StartTurnEvent(startAttack, player1);
+            }
         }
 
         public void ReceiveDefendTurn(bool changeTurn)
         {
-            ReceiveDefendTurnEvent(changeTurn);
+            if (ReceiveDefendTurnEvent != null)
+            {
+                ReceiveDefendTurnEvent(changeTurn);
+            }
         }
 
         public void ReceiveAttackTurn(bool changeTurn)
         {
-            ReceiveAttackTurnEvent(changeTurn);
+            if (ReceiveAttackTurnEvent != null)
+            {
+                ReceiveAttackTurnEvent(changeTurn);
+            }
         }
 
         public void StartExecuteAttack(bool attack)
         {
-            StartExecuteAttackEvent(attack);
+            if (StartExecuteAttackEvent != null)
+            {
+                StartExecuteAttackEvent(attack);
+            }
         }
 
         public void ReceiveChoiceCardTurn(bool turn)
         {
-            ReceiveChoiceCardTurnEvent(turn);
+            if (ReceiveChoiceCardTurnEvent != null)
+            {
+                ReceiveChoiceCardTurnEvent(turn);
+            }
         }
 
         public void CleanCardsSurvival(List<CardContract> cardsSurvival)
         {
-            CleanCardsSurvivalEvent(cardsSurvival);
+            if (CleanCardsSurvivalEvent != null)
+            {
+                CleanCardsSurvivalEvent(cardsSurvival);
+            }
         }
 
         public void GetCardToNewTurn(CardContract card)
         {
-            GetCardToNewTurnEvent(card);
+            if (GetCardToNewTurnEvent != null)
+            {
+                GetCardToNewTurnEvent(card);
+            }
         }
 
         public void ShowTotalDamage(int damage)
         {
-            ShowTotalDamageEvent(damage);
+            if (ShowTotalDamageEvent != null)
+            {
+                ShowTotalDamageEvent(damage);
+            }
         }
 
         public void ReceiveGameOver(bool isGameOver)
         {
-            ReceiveGameOverEvent(isGameOver);
+            if (ReceiveGameOverEvent != null)
+            {
+                ReceiveGameOverEvent(isGameOver);
+            }
         }
 
-
-
-        //------------------------------------------------------------------------
 
 
         public void ConfirmRegistration(int confirmPlayer)
         {
-            ConfirmRegistrationEvent(confirmPlayer);
+            if (ConfirmRegistrationEvent != null)
+            {
+                ConfirmRegistrationEvent(confirmPlayer);
+            }
         }
 
         public void ConfirmLogin(PlayerContract player, bool confirmLogin)
         {
-            ConfirmLoginEvent(player, confirmLogin);
+            if (ConfirmLoginEvent != null)
+            {
+                ConfirmLoginEvent(player, confirmLogin);
+            }
         }
 
         public void LoadFriendList(List<PlayerContract> _playersOnline)
         {
-            LoadFriendListEvent(_playersOnline);
+            if (LoadFriendListEvent != null)
+            {
+                LoadFriendListEvent(_playersOnline);
+            }
         }
         public void SendPlayer(PlayerContract player, bool isFound)
         {
-            SearchPlayerEvent(player, isFound);
+            if (SearchPlayerEvent != null)
+            {
+                SearchPlayerEvent(player, isFound);
+            }
         }
 
         public void SendRequest(bool confirmInvitation)
         {
-            SendInvitationEvent(confirmInvitation);
+            if (SendInvitationEvent != null)
+            {
+                SendInvitationEvent(confirmInvitation);
+            }
         }
 
         public void SeeRequests(List<FriendContract> _friends)
         {
-            SeeRequestsEvent(_friends);
+            if (SeeRequestsEvent != null)
+            {
+                SeeRequestsEvent(_friends);
+            }
         }
 
         public void ReceiveInvitation(string invitationName, PlayerContract friend)
         {
-            ReceiveInvitationEvent(invitationName, friend);
+            if (ReceiveInvitationEvent != null)
+            {
+                ReceiveInvitationEvent(invitationName, friend);
+            }
         }
 
         public void ConfirmRequestAnswered(List<FriendContract> friendContract)
         {
-            ConfirmRequestAnsweredEvent(friendContract);
+            if (ConfirmRequestAnsweredEvent != null)
+            {
+                ConfirmRequestAnsweredEvent(friendContract);
+            }
         }
 
         public void ChargeListOfFriends(List<PlayerContract> playerContracts)
         {
-            ChargeListOfFriendsEvent(playerContracts);
+            if (ChargeListOfFriendsEvent != null)
+            {
+                ChargeListOfFriendsEvent(playerContracts);
+            }
+
         }
 
         public void ShowProfileData(PlayerContract playerContract)
         {
-            ShowProfileDataEvent(playerContract);
+            if (ShowProfileDataEvent != null)
+            {
+                ShowProfileDataEvent(playerContract);
+            }
         }
 
         public void ShowProfileImages(List<ProfieImageContract> profieImageContract)
         {
-            ShowProfileImagesEvent(profieImageContract);
+            if (ShowProfileImagesEvent != null)
+            {
+                ShowProfileImagesEvent(profieImageContract);
+            }
         }
 
         public void OpenMainWindow(PlayerContract player)
         {
-            OpenMainWindowEvent(player);
+            if (OpenMainWindowEvent != null)
+            {
+                OpenMainWindowEvent(player);
+            }
+        
         }
 
-        //public void ReceiveConfirmation(string playerConfirmation)
-        //{
-        //    ReceiveConfirmationEvent(playerConfirmation);
-        //}
     }
 
 }

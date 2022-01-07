@@ -10,152 +10,368 @@ namespace ContractsOW
     [ServiceContract(CallbackContract = typeof(IPlayerServiceCallback))]
     public interface IPlayerService
     {
-        [OperationContract(IsOneWay = true)]
-        void Logon(Guid guid, string userName);
-
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // </param>
         [OperationContract(IsOneWay = true)]
         void chargeDecks(string player);
 
+        // <sumary>
+        // Load cards of a deck
+        // </sumary>
+        // <param name = "deckName">
+        // </param>
         [OperationContract(IsOneWay = true)]
         void LoadCards(string deckName);
 
+        // <sumary>
+        // get all cards
+        // </sumary>
         [OperationContract(IsOneWay = true)]
         void GetAllCards();
 
+        // <sumary>
+        // save deck in database
+        // </sumary>
+        // <param name = "cardList">
+        // </param>
+        // <param name = "deckName">
+        // </param>
+        // <param name = "playerName">
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SaveDeck(List<string> cardList, string deckName, string playerName);
 
+        // <sumary>
+        // get card to modify
+        // </sumary>
+        // <param name = "cardList">
+        // </param>
         [OperationContract(IsOneWay = true)]
         void GetCardsToModify(List<string> cardList);
 
+        // <sumary>
+        // update a deck
+        // </sumary>
+        // <param name = "cardList">
+        // </param>
+        // <param name = "deckName">
+        // </param>
         [OperationContract(IsOneWay = true)]
         void UpdateDeck(List<CardContract> cardList, string deckName);
 
-        //[OperationContract(IsOneWay = true)]
-        //void SendInvitation(string userName, PlayerContract frienName);
-
-        //[OperationContract(IsOneWay = true)]
-        //void AceptInvitation(string playerAcepted, string playerHost);
-
-        [OperationContract(IsOneWay = true)]
-        void GetFriendList(Guid guid, string playerName);
-
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void StarGame(string player1, string player2);
 
-        [OperationContract(IsOneWay = true)]
-        void startTimer();
-
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void sendMessageInGame(PlayerContract playerSender, PlayerContract playerReceiver, string message);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void UpdateGuid(Guid id, PlayerContract name, string nameToSend);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void UpdateIdFriend(string name);
 
-        [OperationContract(IsOneWay = true)]
-        void SendCardsOnTable(byte[] imageOnboard, string player);
-
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void getGameHistory(string playerName);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SaveGameData(GameContract game);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void UpdateGameData(GameContract game);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SendSelectCard(List<CardContract> cardList, string playerName);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SendAttack(string player, List<CardContract> cardsToAttack);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SendCardToAttack(string player, List<CardContract> cardList);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void StartTurns(string player1);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SendPlayerToStartTurns(string player1);
 
+
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void PassTurnToDefend(string player);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void PassTurnToAttack(string player);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void ExecuteAttack(string player);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void ChangeChoiceCardTurns(string player);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SendSurvivalCards(string player, List<CardContract> cardListAttack);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void AddCardInNewTurn(string deckName);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SendTotalDamageDealt(string playerName, int damage);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SendGameOver(string playerName);
 
-
-
-        //-------------------------------------------------------------
-
-
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void RegisterUser(PlayerContract player);
 
         [OperationContract(IsOneWay = true)]
         void LoginUser(PlayerContract player);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void GetPlayers(PlayerContract userLogin);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SearchPlayer(string playerName);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SendInvitation(string playerSend, string playerReceive);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SearchOfRequests(string playerName);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void SendInvitationGame(string playerName, string frienName);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void AceptInvitation(string playerAcepted, string playerHost);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void AcceptFriendRequest(int id);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void DenyFriendRequest(int id);
 
         [OperationContract(IsOneWay = true)]
         void GetPlayerList(PlayerContract playerContract);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void ConsultProfile(string nickName);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void GetProfileImages();
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void UpdatePlayer(PlayerContract player);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void DisconnectFromUsersOnline(string player);
 
+        // <sumary>
+        // Charge decks fo a player
+        // </sumary>
+        // <param name = "player">
+        // Friend request to send
+        // </param>
         [OperationContract(IsOneWay = true)]
         void GetOutGameWindow(string player);
 
@@ -197,9 +413,6 @@ namespace ContractsOW
 
         [OperationContract(IsOneWay = true)]
         void LoadGame(PlayerContract playe1, PlayerContract player2);
-
-        [OperationContract(IsOneWay = true)]
-        void updateTime();
 
         [OperationContract(IsOneWay = true)]
         void ReceiveMessage(string playerSender, string message);
@@ -258,22 +471,11 @@ namespace ContractsOW
         [OperationContract(IsOneWay = true)]
         void ReceiveGameOver(bool isGameOver);
 
-
-
-
-        //-------------------------------------------------------------
-
-
-
-
         [OperationContract(IsOneWay = true)]
         void ConfirmRegistration(int confirmPlayer);
 
         [OperationContract(IsOneWay = true)]
         void ConfirmLogin(PlayerContract player, bool confirmLogin);
-
-        //[OperationContract(IsOneWay = true)]
-        //void LoadFriendList(List<PlayerContract> _playersOnline);
 
         [OperationContract(IsOneWay = true)]
         void SendPlayer(PlayerContract player, bool isFound);
@@ -283,12 +485,6 @@ namespace ContractsOW
 
         [OperationContract(IsOneWay = true)]
         void SeeRequests(List<FriendContract> _friends);
-
-        //[OperationContract(IsOneWay = true)]
-        //void ReceiveInvitation(string invitationName, PlayerContract player);
-
-        //[OperationContract(IsOneWay = true)]
-        //void ReceiveConfirmation(string playerConfirmation);
 
         [OperationContract(IsOneWay = true)]
         void ConfirmRequestAnswered(List<FriendContract> friendContract);

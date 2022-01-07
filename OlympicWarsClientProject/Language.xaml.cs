@@ -26,7 +26,7 @@ namespace OlympicWarsClientProject
 
         private void Button_OpenLogin(object sender, RoutedEventArgs e)
         {
-            new Register().ShowDialog();
+            new Register().Show();
             this.Close();
         }
 

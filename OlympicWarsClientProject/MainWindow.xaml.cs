@@ -348,6 +348,7 @@ namespace OlympicWarsClientProject
                 _serverPlayerProxy = new ServerPlayerProxy(playerService);
                 _playerChannel = _serverPlayerProxy.ChannelFactory.CreateChannel();
                 _playerChannel.SendInvitation(labelPlayer.Content.ToString(), textBoxSearch.Text);
+
             }
             catch (EndpointNotFoundException ex)
             {
@@ -468,7 +469,7 @@ namespace OlympicWarsClientProject
             playGame.StartGame(player1, player2);
             //playGame.StartTurnsPlayer1(player1.nickName);
             playGame.Show();
-            this.Close();
+            this.Hide();
         }
         private void StartTurn(bool startAttack, string player1)
         {
@@ -757,6 +758,7 @@ namespace OlympicWarsClientProject
         private void Button_Click6(object sender, RoutedEventArgs e)
         {
             gridHistory.Visibility = Visibility.Hidden;
+            loadGameHistoryData();
         }
 
         public void loadGameHistoryData()
@@ -814,6 +816,10 @@ namespace OlympicWarsClientProject
                 _serverPlayerProxy = new ServerPlayerProxy(playerService);
                 _playerChannel = _serverPlayerProxy.ChannelFactory.CreateChannel();
                 _playerChannel.AcceptFriendRequest(playerFriend.idFriend);
+                _playerChannel.GetPlayers(new PlayerContract
+                {
+                    nickName = labelPlayer.Content.ToString()
+                });
             }
             catch (EndpointNotFoundException ex)
             {
@@ -838,6 +844,7 @@ namespace OlympicWarsClientProject
                 _serverPlayerProxy = new ServerPlayerProxy(playerService);
                 _playerChannel = _serverPlayerProxy.ChannelFactory.CreateChannel();
                 _playerChannel.DenyFriendRequest(playerFriend.idFriend);
+                
             }
             catch (EndpointNotFoundException ex)
             {
@@ -918,6 +925,10 @@ namespace OlympicWarsClientProject
                 _serverPlayerProxy = new ServerPlayerProxy(playerService);
                 _playerChannel = _serverPlayerProxy.ChannelFactory.CreateChannel();
                 _playerChannel.DisconnectFromUsersOnline(labelPlayer.Content.ToString());
+                //_playerChannel.GetPlayers(new PlayerContract
+                //{
+                //    nickName = labelPlayer.Content.ToString()
+                //});
             }
             catch (EndpointNotFoundException ex)
             {
